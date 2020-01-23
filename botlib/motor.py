@@ -3,6 +3,8 @@ from .brickpi3 import *
 class Motor:
     _bp = BrickPi3()
 
+    STATUS_POWER = 1
+
     def __init__(self, port, pmin=None, pmax=None):
         self._port = port
 
@@ -14,6 +16,23 @@ class Motor:
 
     # gracefully morph current power to pnew
     def change_power(self, pnew):
+        import math
+        import time
+
+        if 100 < abs(pnew):
+            return
+
+        STEP_SIZE = 25.0
+        pcur = self.status()[self.STATUS_POWER]
+        # delta < 0: slow down; 0 < delta: accelerate
+        delta = pnew - pcur
+        steps = math.ceil(abs(delta)/STEP_SIZE)
+        inc = delta/float(steps)
+
+        for _ in range(steps):
+            pcur += inc
+            self._bp.set_motor_power(self._port, pcur)
+            time.sleep(0.25)
         self._bp.set_motor_power(self._port, pnew)
 
     def stop(self):
