@@ -10,11 +10,33 @@ class Motor:
         self._pmax = pmax
         self._pinit = None
 
+    def status(self):
+        return self._bp.get_motor_status(self._port)
+
+    # gracefully morph current power to pnew
+    def change_power(self, pnew):
+        #if (self._pmin and self._pmax) and not (self._pmin <= pnew <= self._pmax):
+            #raise Exception('power {} is out of bounds for motor {}'.format(pnew, self._port))
+        self._bp.set_motor_power(self._port, pnew)
+
+    def stop(self):
+        self.change_power(0)
+
+class CalibratedMotor(Motor):
+    # TODO: call set_motor_limits for limiting power
+    def __init__(self, port, pmin=None, pmax=None, calpow=20):
+        super().__init__(port, pmin, pmax)
+
+        # power with which the motor will be calibrated
+        self._calpow = calpow
+        # initial position for this motor. will be determined in `calibrate`
+        self._pinit = None
+
     # adjust minimum and maximum values
     def calibrate(self):
         import time
 
-        self.change_power(-20)
+        self.change_power(-self._calpow)
         encprev, encnow = 0, None
         while encprev != encnow:
             encprev = encnow
@@ -23,7 +45,7 @@ class Motor:
         self._pmin = encnow
         self.change_power(0)
 
-        self.change_power(20)
+        self.change_power(self._calpow)
         encprev, encnow = 0, None
         while encprev != encnow:
             encprev = encnow
@@ -44,11 +66,3 @@ class Motor:
             raise Exception('initial position for motor {} not known'.format(self._port))
         self._bp.set_motor_position(self._port, self._pinit)
 
-    def status(self):
-        return self._bp.get_motor_status(self._port)
-
-    # gracefully morph current power to pnew
-    def change_power(self, pnew):
-        #if (self._pmin and self._pmax) and not (self._pmin <= pnew <= self._pmax):
-            #raise Exception('power {} is out of bounds for motor {}'.format(pnew, self._port))
-        self._bp.set_motor_power(self._port, pnew)
