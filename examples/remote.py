@@ -14,7 +14,7 @@ def main():
     print('calibrating...')
     bot.calibrate()
 
-    print('Up/Down: manage speed, Left/Right: manage direction, Space: stop, Backspace: exit')
+    print('Up/Down: manage speed, Left/Right: manage direction, w/s: Carry/Pickup, Space: stop, Backspace: exit')
 
     while True:
         inp = readkey()
@@ -29,6 +29,10 @@ def main():
         elif inp == key.SPACE:
             bot.stop_all()
             power, steer = 0, 0
+        elif inp == 'w':
+            bot._forklift.to_carry_mode()
+        elif inp == 's':
+            bot._forklift.to_pickup_mode()
         elif inp == key.BACKSPACE:
             print('stopping...')
             bot.stop_all()
