@@ -14,6 +14,8 @@ def stop():
     global bp
     global power
 
+    print('stopping...')
+
     step_down = (t for t in (cos(i/100.) for i in range(1, 314, 15)) if 0 < t)
     for step in step_down:
         power *= step
@@ -54,6 +56,7 @@ def main():
             stop()
         elif inp == key.BACKSPACE:
             stop()
+            print('bye...')
             exit()
         else:
             continue
