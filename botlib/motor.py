@@ -27,6 +27,10 @@ class Motor:
         # delta < 0: slow down; 0 < delta: accelerate
         delta = pnew - pcur
         steps = math.ceil(abs(delta)/STEP_SIZE)
+
+        if steps == 0:
+            return
+
         inc = delta/float(steps)
 
         for _ in range(steps):
@@ -80,8 +84,21 @@ class CalibratedMotor(Motor):
         time.sleep(0.5)
         self.to_init_position()
 
+    def change_position(self, pnew):
+        if (self._pmin and self._pmax) and not (self._pmin <= pnew <= self._pmax):
+            raise Exception('position ({} < {} < {}) is invalid for motor {}'.format(self._pmin, pnew, self._pmax, self._port))
+        self._bp.set_motor_position(self._port, pnew)
+
     def to_init_position(self):
         if not self._pinit:
             raise Exception('initial position for motor {} not known'.format(self._port))
-        self._bp.set_motor_position(self._port, self._pinit)
+        self.change_position(self._pinit)
 
+    # factor is a number between -1.0 and 1.0. this function determines the corresponding position
+    def position_from_factor(self, factor):
+        assert(self._pinit and self._pmin and self._pmax)
+        if 0 == factor:
+            return self._pinit
+        if 0 < factor:
+            return self._pinit + (self._pmax - self._pinit) * factor
+        return self._pinit - (self._pinit - self._pmin) * abs(factor)
