@@ -44,12 +44,12 @@ def main():
                 power = 100
         elif inp == key.RIGHT:
             steer += 10
-            if 40 < power:
+            if 40 < steer:
                 steer = 40
             bp.set_motor_position(bp.PORT_D, steer)
         elif inp == key.LEFT:
             steer -= 10
-            if power < -40:
+            if steer < -40:
                 steer = -40
             bp.set_motor_position(bp.PORT_D, steer)
         elif inp == key.SPACE:
