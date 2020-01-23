@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from botlib import *
+from botlib.motor import Motor
 from readchar import readkey, key
 from math import cos
 
