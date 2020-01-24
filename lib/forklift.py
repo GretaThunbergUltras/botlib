@@ -1,17 +1,15 @@
+from .motor import Motor
+
 class Forklift:
     def __init__(self, bot):
-        self._ROTATE_MOTOR = bot._bp.PORT_C
-        self._ROTATE_MOTOR_MIN = 0
-        self._ROTATE_MOTOR_MAX = 0
-        self._HEIGHT_MOTOR = bot._bp.PORT_A
-        self._HEIGHT_MOTOR_MIN = 0
-        self._HEIGHT_MOTOR_MAX = 0
+        self._rotate_motor = Motor(Motor._bp.PORT_C)
+        self._height_motor = Motor(Motor._bp.PORT_A)
 
         self._bot = bot
 
     def calibrate(self):
-        # adjust minimum and maximum values
-        pass
+        self._rotate_motor.calibrate()
+        self._height_motor.calibrate()
 
     def to_carry_mode():
         # rotate backwards
