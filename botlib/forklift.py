@@ -7,6 +7,9 @@ class Forklift:
         self._rotate_motor = CalibratedMotor(CalibratedMotor._bp.PORT_C, calpow=70)
         self._height_motor = CalibratedMotor(CalibratedMotor._bp.PORT_A, calpow=40)
 
+    def __del__(self):
+        self._height_motor.to_init_position()
+
     def stop_all(self):
         self._rotate_motor.stop()
         self._height_motor.stop()

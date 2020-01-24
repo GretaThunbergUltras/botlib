@@ -59,11 +59,13 @@ class CalibratedMotor(Motor):
     def calibrate(self):
         import time
 
+        CALIBRATE_SLEEP = 0.75
+
         self.change_power(-self._calpow)
         encprev, encnow = 0, None
         while encprev != encnow:
             encprev = encnow
-            time.sleep(0.5)
+            time.sleep(CALIBRATE_SLEEP)
             encnow = self._bp.get_motor_encoder(self._port)
         self._pmin = encnow
         self.change_power(0)
@@ -72,7 +74,7 @@ class CalibratedMotor(Motor):
         encprev, encnow = 0, None
         while encprev != encnow:
             encprev = encnow
-            time.sleep(0.5)
+            time.sleep(CALIBRATE_SLEEP)
             encnow = self._bp.get_motor_encoder(self._port)
         self._pmax = encnow
         self.change_power(0)

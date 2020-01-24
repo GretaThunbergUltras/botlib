@@ -10,6 +10,9 @@ class Bot:
         self._camera = Camera(self)
         self._forklift = Forklift(self)
 
+    def __del__(self):
+        self._steer_motor.to_init_position()
+
     def drive_power(self, pnew):
         self._drive_motor.change_power(pnew)
 
