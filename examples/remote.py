@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 
+from botlib import *
 from readchar import readkey, key
 from math import cos
-import brickpi3
 
-bp = brickpi3.BrickPi3()
+bp = Motor._bp
 power = 0
 steer = 0
 
