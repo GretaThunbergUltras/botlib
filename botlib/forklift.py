@@ -2,10 +2,10 @@ from .motor import Motor
 
 class Forklift:
     def __init__(self, bot):
+        self._bot = bot
+
         self._rotate_motor = Motor(Motor._bp.PORT_C)
         self._height_motor = Motor(Motor._bp.PORT_A)
-
-        self._bot = bot
 
     def calibrate(self):
         self._rotate_motor.calibrate()
