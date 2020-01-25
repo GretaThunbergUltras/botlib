@@ -1,7 +1,8 @@
-import brickpi3
-import time
-BP = brickpi3.BrickPi3()
-BP.set_motor_power(BP.PORT_B, 20)
-time.sleep(1)
-BP.set_motor_power(BP.PORT_B, 0)
+from botlib.motor import Motor
 
+import time
+
+if __name__ == '__main__':
+    Motor._bp.set_motor_power(BP.PORT_B, 20)
+    time.sleep(1)
+    Motor._bp.set_motor_power(BP.PORT_B, 0)
