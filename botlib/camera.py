@@ -5,7 +5,7 @@ class Camera:
         self._bot = bot
 
         self._cam = picamera.PiCamera()
-        self._buffer = picamera.PiCameraCircularIO(self._cam)
+        self._buffer = picamera.PiCameraCircularIO(self._cam, seconds=3)
         self._initialized = False
 
     def start(self):
@@ -16,7 +16,8 @@ class Camera:
         self._cam.start_recording(self._buffer)
 
     def stop(self):
-        self._cam.stop_recording()
+        if self._cam.recording:
+            self._cam.stop_recording()
 
     def __del__(self):
         self.stop()

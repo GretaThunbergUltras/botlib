@@ -1,13 +1,13 @@
-#from .camera import Camera
+from .camera import Camera
 from .forklift import Forklift
 from .motor import CalibratedMotor, Motor
 
 class Bot:
     def __init__(self):
         self._drive_motor = Motor(Motor._bp.PORT_B)
-        self._steer_motor = CalibratedMotor(Motor._bp.PORT_D, calpow=30)
+        self._steer_motor = CalibratedMotor(Motor._bp.PORT_D, calpow=20)
 
-        #self._camera = Camera(self)
+        self._camera = Camera(self)
         self._forklift = Forklift(self)
 
     def drive_power(self, pnew):
