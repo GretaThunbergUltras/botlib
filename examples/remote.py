@@ -10,7 +10,7 @@ def main():
     from readchar import readkey, key
 
     bot = Bot()
-    STEP_POWER, STEP_STEER = 10, 0.5
+    STEP_POWER, STEP_STEER = 10, 0.25
     power, steer = 0, 0.0
     running = True
 
