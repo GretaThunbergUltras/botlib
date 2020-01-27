@@ -4,19 +4,26 @@ def clamp(vmin, v, vmax):
     return max(vmin, min(v, vmax))
 
 def main():
+    import sys
+
     from botlib.bot import Bot
     from readchar import readkey, key
 
     bot = Bot()
-    STEP_POWER, STEP_STEER = 10, 0.5
+    STEP_POWER, STEP_STEER = 10, 0.25
     power, steer = 0, 0.0
+    running = True
+
+    if '--camera' in sys.argv:
+        bot._camera.start()
+        bot._camera.enable_preview()
 
     print('calibrating...')
     bot.calibrate()
 
     print('Up/Down: manage speed, Left/Right: manage direction, w/s: Carry/Pickup, Space: stop, Backspace: exit')
 
-    while True:
+    while running:
         inp = readkey()
         if inp == key.DOWN or inp == key.UP:
             power += STEP_POWER if inp == key.UP else -STEP_POWER
@@ -36,8 +43,12 @@ def main():
         elif inp == key.BACKSPACE:
             print('stopping...')
             bot.stop_all()
-            print('bye...')
-            exit()
+            running = False
+
+    if '--camera' in sys.argv:
+        bot._camera.stop()
+        
+    print('bye...')
 
 if __name__ == '__main__':
     main()
