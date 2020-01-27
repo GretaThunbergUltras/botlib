@@ -177,19 +177,21 @@ class SonarI2C(object):
         finally:
             octosonar.cancel()
             pi.stop()
+    def main(argv):
+        print("Press CTRL-C to cancel.")
+        try:
+            opts, args = getopt.getopt(argv,"hs:",["sensor="])
+        except getopt.GetoptError:
+            print 'test.py -i <inputfile> -o <outputfile>'
+        sys.exit(2)
+        for opt, arg in opts:
+            if opt == '-h':
+                print '-s or --sensor to select which sensor to read'
+                print 'The standard reads all sensors and prints them next to each other.'
+                print 'Use numbers 1-7 to read the respective sensors.'
+                sys.exit()
+            elif opt in ("-s", "--sensor"):
+                read_sensor(i)
 
 if __name__ == "__main__":
-    print("Press CTRL-C to cancel.")
-    try:
-        opts, args = getopt.getopt(argv,"hs:",["sensor="])
-    except getopt.GetoptError:
-        print 'test.py -i <inputfile> -o <outputfile>'
-    sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h':
-            print '-s or --sensor to select which sensor to read'
-            print 'The standard reads all sensors and prints them next to each other.'
-            print 'Use numbers 1-7 to read the respective sensors.'
-            sys.exit()
-        elif opt in ("-s", "--sensor"):
-            read_sensor(i)
+    main(sys.argv[1:])
