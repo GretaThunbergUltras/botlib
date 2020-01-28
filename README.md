@@ -6,7 +6,8 @@ A python library for working with the infbots.
 
 ```
 git clone https://github.com/GretaThunbergUltras/botlib; cd botlib
-sudo pip3 install .
+chmod +x install
+./install
 ```
 
 ## Fernsteuerung
@@ -14,3 +15,5 @@ sudo pip3 install .
 ```
 sudo python3 examples/remote.py
 ```
+
+> `sudo` wird benötigt, da sonst Berechtigungen fehlen.

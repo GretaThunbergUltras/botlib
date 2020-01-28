@@ -1,0 +1,27 @@
+#!/bin/bash
+
+deps="python3-pil.imagetk libqt4-dev"
+py_deps="opencv-python readchar"
+
+function is_installed() {
+    dpkg -l | grep "$1"
+    return $?
+}
+
+for dep in $deps; do
+    echo "INSTALLING $dep"
+    if [[ ! $(is_installed $dep) ]]; then
+        sudo apt-get install $dep -y &>/dev/null
+    fi
+done
+
+for py_dep in $py_deps; do
+    echo "INSTALLING $py_dep"
+    sudo pip3 install $py_dep &>/dev/null
+done
+
+# install this library
+echo "INSTALLING botlib"
+sudo pip3 install . --upgrade &>/dev/null
+
+echo "done."
