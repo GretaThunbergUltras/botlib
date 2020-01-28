@@ -137,6 +137,7 @@ class SonarI2C(object):
         """
         self.read(port)
         return self._micros * (self.SPEED_OF_SOUND_INCH / 2000000.0)
+
     def pretty():
         pi = pigpio.pi()
         if not pi.connected:
@@ -159,6 +160,7 @@ class SonarI2C(object):
         finally:
             octosonar.cancel()
             pi.stop()
+
     def read_sensor(i):
         pi = pigpio.pi()
         if not pi.connected:
@@ -177,6 +179,7 @@ class SonarI2C(object):
         finally:
             octosonar.cancel()
             pi.stop()
+            
     def main(argv):
         print("Press CTRL-C to cancel.")
         try:
@@ -192,6 +195,7 @@ class SonarI2C(object):
                 sys.exit()
             elif opt in ("-s", "--sensor"):
                 read_sensor(i)
+            else pretty()
 
 if __name__ == "__main__":
     main(sys.argv[1:])
