@@ -14,7 +14,6 @@ http://abyz.co.uk/rpi/pigpio/
 
 import pigpio
 import time
-import sys
 
 
 class SonarI2C(object):
@@ -138,64 +137,28 @@ class SonarI2C(object):
         self.read(port)
         return self._micros * (self.SPEED_OF_SOUND_INCH / 2000000.0)
 
-    def pretty():
-        pi = pigpio.pi()
-        if not pi.connected:
-            exit(0)
-        try:
-            octosonar = SonarI2C(pi, int_gpio=25)
-            result_list = []
-            while True:
-                for i in range(7):
-                    sonar_result = octosonar.read_cm(i)
-                    time.sleep(0.001)
-                    if sonar_result is False:
-                        result_list.append("Timed out")
-                    else:
-                        result_list.append(round(sonar_result, 1))
-                print(result_list)
-                result_list = []
-        except KeyboardInterrupt:
-            print("\nCTRL-C pressed. Cleaning up and exiting.")
-        finally:
-            octosonar.cancel()
-            pi.stop()
 
-    def read_sensor(i):
-        pi = pigpio.pi()
-        if not pi.connected:
-            exit(0)
-        try:
-            octosonar = SonarI2C(pi, int_gpio=25)
-            while True:
+if __name__ == "__main__":
+    print("Press CTRL-C to cancel.")
+    pi = pigpio.pi()
+    if not pi.connected:
+        exit(0)
+    try:
+        octosonar = SonarI2C(pi, int_gpio=25)
+        result_list = []
+        while True:
+            for i in range(7):
                 sonar_result = octosonar.read_cm(i)
                 time.sleep(0.001)
                 if sonar_result is False:
-                    print "Timed out"
+                    result_list.append("Timed out")
                 else:
-                    print (round(sonar_result, 1))
-        except KeyboardInterrupt:
-            print("\nCTRL-C pressed. Cleaning up and exiting.")
-        finally:
-            octosonar.cancel()
-            pi.stop()
-            
-    def main(argv):
-        print("Press CTRL-C to cancel.")
-        try:
-            opts, args = getopt.getopt(argv,"hs:",["sensor="])
-        except getopt.GetoptError:
-            print 'test.py -i <inputfile> -o <outputfile>'
-        sys.exit(2)
-        for opt, arg in opts:
-            if opt == '-h':
-                print '-s or --sensor to select which sensor to read'
-                print 'The standard reads all sensors and prints them next to each other.'
-                print 'Use numbers 1-7 to read the respective sensors.'
-                sys.exit()
-            elif opt in ("-s", "--sensor"):
-                read_sensor(i)
-            else pretty()
+                    result_list.append(round(sonar_result, 1))
+            print(result_list)
+            result_list = []
 
-if __name__ == "__main__":
-    main(sys.argv[1:])
+    except KeyboardInterrupt:
+        print("\nCTRL-C pressed. Cleaning up and exiting.")
+    finally:
+        octosonar.cancel()
+        pi.stop()
