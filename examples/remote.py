@@ -1,18 +1,85 @@
 #!/usr/bin/python3
 
+from botlib.bot import Bot
+from readchar import readkey, key
+
+PORT = 6666
+
+class Protocol:
+    MSG_STOP = 1
+    MSG_STEER_LEFT = 2
+    MSG_STEER_RIGHT = 4
+    MSG_SPEED_UP = 8
+    MSG_SPEED_DOWN = 16
+    MSG_FORKLIFT_PICKUP = 32
+    MSG_FORKLIFT_CARRY = 64
+
+bot = Bot()
+power, steer = 0, 0.0
+
 def clamp(vmin, v, vmax):
     return max(vmin, min(v, vmax))
+
+def create_server():
+    from threading import Thread
+    def host():
+        import socket
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind(('', PORT))
+            s.listen()
+            print('listening...')
+            con, addr = s.accept()
+            print('connected...')
+            with con:
+                while True:
+                    inp = con.recv(1024).decode('ascii')
+                    print('server received', inp)
+                    handle_event(inp)
+                    if inp == key.BACKSPACE:
+                        print('stopping...')
+                        bot.stop_all()
+                        break
+
+    thread = Thread(group=None, target=host, daemon=True)
+    thread.start()
+
+def handle_event(inp):
+    global bot
+    global power
+    global steer
+
+    STEP_POWER, STEP_STEER = 10, 0.25
+
+    if inp == Protocol.MSG_SPEED_DOWN or inp == Protocol.MSG_SPEED_UP:
+        power += STEP_POWER if inp == Protocol.MSG_SPEED_UP else -STEP_POWER
+        power = clamp(-100, power, 100)
+        bot.drive_power(power)
+    elif inp == Protocol.MSG_STEER_RIGHT or inp == Protocol.MSG_STEER_LEFT:
+        steer += STEP_STEER if inp == Protocol.MSG_STEER_RIGHT else -STEP_STEER
+        steer = clamp(-1.0, steer, 1.0)
+        bot.drive_steer(steer)
+    elif inp == Protocol.MSG_STOP:
+        bot.stop_all()
+        power, steer = 0, 0
+    elif inp == Protocol.MSG_FORKLIFT_CARRY:
+        bot._forklift.to_carry_mode()
+    elif inp == Protocol.MSG_FORKLIFT_PICKUP:
+        bot._forklift.to_pickup_mode()
 
 def main():
     import sys
 
-    from botlib.bot import Bot
-    from readchar import readkey, key
+    global bot
 
-    bot = Bot()
-    STEP_POWER, STEP_STEER = 10, 0.25
-    power, steer = 0, 0.0
     running = True
+
+    if '--server' in sys.argv:
+        create_server()
+        while running:
+            inp = readkey()
+            if inp == key.BACKSPACE:
+                print('stopping...')
+                exit
 
     if '--camera' in sys.argv:
         bot._camera.start()
@@ -25,22 +92,8 @@ def main():
 
     while running:
         inp = readkey()
-        if inp == key.DOWN or inp == key.UP:
-            power += STEP_POWER if inp == key.UP else -STEP_POWER
-            power = clamp(-100, power, 100)
-            bot.drive_power(power)
-        elif inp == key.RIGHT or inp == key.LEFT:
-            steer += STEP_STEER if inp == key.RIGHT else -STEP_STEER
-            steer = clamp(-1.0, steer, 1.0)
-            bot.drive_steer(steer)
-        elif inp == key.SPACE:
-            bot.stop_all()
-            power, steer = 0, 0
-        elif inp == 'w':
-            bot._forklift.to_carry_mode()
-        elif inp == 's':
-            bot._forklift.to_pickup_mode()
-        elif inp == key.BACKSPACE:
+        handle_event(inp)
+        if inp == key.BACKSPACE:
             print('stopping...')
             bot.stop_all()
             running = False
