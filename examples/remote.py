@@ -20,28 +20,43 @@ power, steer = 0, 0.0
 def clamp(vmin, v, vmax):
     return max(vmin, min(v, vmax))
 
-def create_server():
-    from threading import Thread
-    def host():
-        import socket
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.bind(('', PORT))
-            s.listen()
-            print('listening...')
-            con, addr = s.accept()
-            print('connected...')
-            with con:
-                while True:
-                    inp = con.recv(1024).decode('ascii')
-                    print('server received', inp)
-                    handle_event(inp)
-                    if inp == key.BACKSPACE:
-                        print('stopping...')
-                        bot.stop_all()
-                        break
+def stop():
+    print('stopping...')
+    bot.stop_all()
 
-    thread = Thread(group=None, target=host, daemon=True)
-    thread.start()
+def create_server():
+    import socket
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(('', PORT))
+        s.listen()
+        print('listening...')
+        con, addr = s.accept()
+        print('connected...')
+        with con:
+            while True:
+                inp = con.recv(1024).decode('ascii')
+                if len(inp) == 0:
+                    continue
+                print('server received', int(inp))
+                handle_event(inp)
+                if inp == key.BACKSPACE:
+                    print('stopping...')
+                    bot.stop_all()
+                    break
+
+def run_local():
+    from remoteclient import keyboard_to_protocol
+
+    inp = None
+
+    print('Up/Down: manage speed, Left/Right: manage direction, w/s: Carry/Pickup, Space: stop, Backspace: exit')
+
+    while inp != key.BACKSPACE:
+        inp = readkey()
+        cmd = keyboard_to_protocol
+        if cmd != None:
+            handle_event(inp)
+    stop()
 
 def handle_event(inp):
     global bot
@@ -49,6 +64,7 @@ def handle_event(inp):
     global steer
 
     STEP_POWER, STEP_STEER = 10, 0.25
+    return
 
     if inp == Protocol.MSG_SPEED_DOWN or inp == Protocol.MSG_SPEED_UP:
         power += STEP_POWER if inp == Protocol.MSG_SPEED_UP else -STEP_POWER
@@ -71,37 +87,20 @@ def main():
 
     global bot
 
-    running = True
-
-    if '--server' in sys.argv:
-        create_server()
-        while running:
-            inp = readkey()
-            if inp == key.BACKSPACE:
-                print('stopping...')
-                exit
-
     if '--camera' in sys.argv:
         bot._camera.start()
         bot._camera.enable_preview()
 
     print('calibrating...')
-    bot.calibrate()
+    # bot.calibrate()
 
-    print('Up/Down: manage speed, Left/Right: manage direction, w/s: Carry/Pickup, Space: stop, Backspace: exit')
-
-    while running:
-        inp = readkey()
-        handle_event(inp)
-        if inp == key.BACKSPACE:
-            print('stopping...')
-            bot.stop_all()
-            running = False
+    if '--server' in sys.argv:
+        create_server()
+    else:
+        run_local()
 
     if '--camera' in sys.argv:
         bot._camera.stop()
-        
-    print('bye...')
 
 if __name__ == '__main__':
     main()

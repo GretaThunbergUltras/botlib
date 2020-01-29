@@ -1,13 +1,7 @@
 from readchar import readkey, key
 from remote import PORT, Protocol
 
-def send_command(s, cmd):
-    if isinstance(cmd, str):
-        s.sendall(cmd.encode('ascii'))
-    else:
-        s.sendall(bytes(cmd))
-
-def control_keyboard(s):
+def keyboard_to_protocol(inp):
     keymap = {
         key.RIGHT: Protocol.MSG_STEER_RIGHT,
         key.LEFT: Protocol.MSG_STEER_LEFT,
@@ -16,11 +10,20 @@ def control_keyboard(s):
         'w': Protocol.MSG_FORKLIFT_PICKUP,
         's': Protocol.MSG_FORKLIFT_CARRY
     }
+    if inp not in keymap:
+        return None
+    return keymap[inp]
+
+def send_command(s, cmd):
+    s.sendall(cmd.encode('ascii'))
+
+def control_keyboard(s):
     inp = None
     while inp != key.BACKSPACE:
         inp = readkey()
-        if inp in keymap:
-            send_command(s, keymap[inp])
+        cmd = keyboard_to_protocol(inp)
+        if cmd != None:
+            send_command(s, cmd)
 
 def control_gamepad(s):
     # TODO: Hi, louis. do stuff here pls
@@ -32,8 +35,11 @@ def main():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         addr = input('address: ')
         s.connect((addr, PORT))
-        
-        control_keyboard(s)
+
+        if True:
+            control_gamepad(s)
+        else:
+            control_keyboard(s)
 
 if __name__ == '__main__':
     main()
