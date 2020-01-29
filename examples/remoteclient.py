@@ -61,7 +61,9 @@ def control_gamepad(s):
         events = get_gamepad()
         for event in events:
             # TODO: implement `select` to disconnect
-            if event.code == "ABS_RZ":
+            if event.code == 'BTN_EAST' and event.state == 1:
+                send_command(s, Protocol.MSG_STOP)
+            elif event.code == "ABS_RZ":
                 power = round(event.state / 10.23, 0)
                 send_command(s, Protocol.MSG_SPEED, power)
             elif event.code == "ABS_Z":
