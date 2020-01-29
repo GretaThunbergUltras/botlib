@@ -2,20 +2,7 @@
 
 from botlib.bot import Bot
 from readchar import readkey, key
-
-PORT = 6666
-
-class Protocol:
-    MSG_STOP = 1
-    MSG_STEER_LEFT = 2
-    MSG_STEER_RIGHT = 4
-    MSG_SPEED_UP = 8
-    MSG_SPEED_DOWN = 16
-    MSG_FORKLIFT_PICKUP = 32
-    MSG_FORKLIFT_CARRY = 64
-
-    MSG_STEER = 128
-    MSG_SPEED = 256
+from remoteclient import PORT, Protocol
 
 bot = Bot()
 power, steer = 0, 0.0
@@ -99,7 +86,7 @@ def main():
         bot._camera.enable_preview()
 
     print('calibrating...')
-    # bot.calibrate()
+    bot.calibrate()
 
     if '--server' in sys.argv:
         create_server()

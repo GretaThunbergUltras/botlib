@@ -1,6 +1,19 @@
 from readchar import readkey, key
 from inputs import devices, get_gamepad
-from remote import PORT, Protocol
+
+PORT = 6666
+
+class Protocol:
+    MSG_STOP = 1
+    MSG_STEER_LEFT = 2
+    MSG_STEER_RIGHT = 4
+    MSG_SPEED_UP = 8
+    MSG_SPEED_DOWN = 16
+    MSG_FORKLIFT_PICKUP = 32
+    MSG_FORKLIFT_CARRY = 64
+
+    MSG_STEER = 128
+    MSG_SPEED = 256
 
 def send_command(s, cmd, body=None):
     s.sendall(cmd.encode('ascii'))
