@@ -15,8 +15,23 @@ class Protocol:
     MSG_STEER = 128
     MSG_SPEED = 256
 
+    def parse(seq):
+        parts = seq.split(':')
+        msg = {
+            'cmd': int(parts[0]),
+            'data': None
+        }
+        if 2 <= len(parts):
+            msg['data'] = float(parts[1])
+        return msg
+
+    def to(cmd, data=None):
+        return '{}:{}'.format(cmd,data) if data else '{}'.format(cmd)
+
 def send_command(s, cmd, body=None):
-    s.sendall('{}'.format(cmd).encode('ascii'))
+    msg = Protocol.to(cmd, body)
+    s.sendall(msg.encode('ascii'))
+    #s.sendall('{}'.format(cmd).encode('ascii'))
 
 def keyboard_to_protocol(inp):
     keymap = {
@@ -57,7 +72,7 @@ def control_gamepad(s):
             elif event.code == "ABS_HAT0X":
                 if event.state == 1:
                     send_command(s, Protocol.MSG_FORKLIFT_PICKUP)
-                else:
+                elif event.state == -1:
                     send_command(s, Protocol.MSG_FORKLIFT_CARRY)
             """if event.code == "ABS_HAT0Y":
                 if event.state == -1:
