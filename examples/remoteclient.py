@@ -76,11 +76,15 @@ def control_gamepad(s):
                     send_command(s, Protocol.MSG_FORKLIFT_ROTATE_POWER, 80)
                 elif event.state == -1:
                     send_command(s, Protocol.MSG_FORKLIFT_ROTATE_POWER, -80)
+                else:
+                    send_command(s, Protocol.MSG_FORKLIFT_ROTATE_POWER, 0)
             elif event.code == "ABS_HAT0Y":
                 if event.state == 1:
                     send_command(s, Protocol.MSG_FORKLIFT_HEIGHT_POWER, 80)
                 elif event.state == -1:
                     send_command(s, Protocol.MSG_FORKLIFT_HEIGHT_POWER, -80)
+                else:
+                    send_command(s, Protocol.MSG_FORKLIFT_HEIGHT_POWER, 0)
 
 def main():
     import socket
@@ -88,6 +92,7 @@ def main():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         addr = input('address: ')
         s.connect((addr, PORT))
+        print('connected.')
 
         if devices.gamepads:
             control_gamepad(s)
