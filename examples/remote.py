@@ -40,16 +40,53 @@ def create_server():
 
 def run_local():
     from remoteclient import keyboard_to_protocol
+    from inputs import devices, get_gamepad
 
-    inp = None
+    if devices.gamepads:
+        while True:
+            events = get_gamepad()
+            for event in events:
+                # TODO: implement `select` to disconnect
+                if event.code == 'BTN_EAST' and event.state == 1:
+                    handle_event(Protocol.MSG_STOP)
+                elif event.code == "ABS_RZ":
+                    power = round(event.state / 10.23, 0)
+                    handle_event(Protocol.MSG_SPEED, power)
+                elif event.code == "ABS_Z":
+                    power = round(event.state / 10.23, 0)
+                    handle_event(Protocol.MSG_SPEED, -power)
+                # elif event.code == "ABS_RY":
+                #    if (event.state >= 0 < power) or (event.state < 0 > power):
+                #        power = power * (-1)
+                #    # power = round(event.state/327.67, 0)
+                #    send_command(s, Protocol.MSG_SPEED, power)
+                elif event.code == "ABS_X":
+                    steer = round(event.state / 32767, 2)
+                    handle_event(Protocol.MSG_STEER, steer)
+                elif event.code == "ABS_HAT0X":
+                    if event.state == 1:
+                        handle_event(Protocol.MSG_FORKLIFT_ROTATE_POWER, 80)
+                    elif event.state == -1:
+                        handle_event(Protocol.MSG_FORKLIFT_ROTATE_POWER, -80)
+                    else:
+                        handle_event(Protocol.MSG_FORKLIFT_ROTATE_POWER, 0)
+                elif event.code == "ABS_HAT0Y":
+                    if event.state == 1:
+                        handle_event(Protocol.MSG_FORKLIFT_HEIGHT_POWER, 80)
+                    elif event.state == -1:
+                        handle_event(Protocol.MSG_FORKLIFT_HEIGHT_POWER, -80)
+                    else:
+                        handle_event(Protocol.MSG_FORKLIFT_HEIGHT_POWER, 0)
+    else:
+        inp = None
 
-    print('Up/Down: manage speed, Left/Right: manage direction, w/s: Carry/Pickup, Space: stop, Backspace: exit')
+        print('Up/Down: manage speed, Left/Right: manage direction, w/s: Carry/Pickup, Space: stop, Backspace: exit')
 
-    while inp != key.BACKSPACE:
-        inp = readkey()
-        cmd = keyboard_to_protocol
-        if cmd != None:
-            handle_event(inp)
+        while inp != key.BACKSPACE:
+            inp = readkey()
+            cmd = keyboard_to_protocol(inp)
+            if cmd != None:
+                handle_event(inp)
     stop()
 
 def handle_event(cmd, data=None):
