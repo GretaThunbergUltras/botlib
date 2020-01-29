@@ -27,9 +27,12 @@ def create_server():
                 inp = con.recv(1024).decode('ascii')
                 if len(inp) == 0:
                     continue
-                req = Protocol.parse(inp)
-                print('server received', req['cmd'], req['data'])
-                handle_event(req['cmd'], req['data'])
+                try:
+                    req = Protocol.parse(inp)
+                    print('server received', req['cmd'], req['data'])
+                    handle_event(req['cmd'], req['data'])
+                except ValueError:
+                    print('package invalid')
 
 def run_local():
     from remoteclient import keyboard_to_protocol
@@ -52,13 +55,17 @@ def handle_event(cmd, data=None):
 
     STEP_POWER, STEP_STEER = 10, 0.25
 
+    pval = data if data != None else 0
+
     if cmd == Protocol.MSG_SPEED:
-        pval = data if data != None else 0
         bot.drive_power(pval)
-    if cmd == Protocol.MSG_STEER:
-        pval = data if data != None else 0
+    elif cmd == Protocol.MSG_STEER:
         bot.drive_steer(pval)
-    if cmd == Protocol.MSG_SPEED_DOWN or cmd == Protocol.MSG_SPEED_UP:
+    elif cmd == Protocol.MSG_FORKLIFT_HEIGHT_POWER:
+        bot._forklift._height_motor.change_power(pval)
+    elif cmd == Protocol.MSG_FORKLIFT_ROTATE_POWER:
+        bot._forklift._rotate_motor.change_power(pval)
+    elif cmd == Protocol.MSG_SPEED_DOWN or cmd == Protocol.MSG_SPEED_UP:
         if data:
             power = data
         else:

@@ -14,6 +14,8 @@ class Protocol:
 
     MSG_STEER = 128
     MSG_SPEED = 256
+    MSG_FORKLIFT_HEIGHT_POWER = 512
+    MSG_FORKLIFT_ROTATE_POWER = 1024
 
     def parse(seq):
         parts = seq.split(':')
@@ -71,14 +73,14 @@ def control_gamepad(s):
                 send_command(s, Protocol.MSG_STEER, steer)
             elif event.code == "ABS_HAT0X":
                 if event.state == 1:
-                    send_command(s, Protocol.MSG_FORKLIFT_PICKUP)
+                    send_command(s, Protocol.MSG_FORKLIFT_ROTATE_POWER, 80)
                 elif event.state == -1:
-                    send_command(s, Protocol.MSG_FORKLIFT_CARRY)
-            """if event.code == "ABS_HAT0Y":
-                if event.state == -1:
-                    print("Forklift up")
-                else:
-                    print("Forklift down")"""
+                    send_command(s, Protocol.MSG_FORKLIFT_ROTATE_POWER, -80)
+            elif event.code == "ABS_HAT0Y":
+                if event.state == 1:
+                    send_command(s, Protocol.MSG_FORKLIFT_HEIGHT_POWER, 80)
+                elif event.state == -1:
+                    send_command(s, Protocol.MSG_FORKLIFT_HEIGHT_POWER, -80)
 
 def main():
     import socket
