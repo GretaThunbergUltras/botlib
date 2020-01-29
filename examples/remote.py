@@ -33,6 +33,10 @@ def create_server():
                     handle_event(req['cmd'], req['data'])
                 except ValueError:
                     print('package invalid')
+                except Exception as e:
+                    print(e)
+                    stop()
+                    break
 
 def run_local():
     from remoteclient import keyboard_to_protocol

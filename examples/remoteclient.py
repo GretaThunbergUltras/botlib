@@ -63,11 +63,15 @@ def control_gamepad(s):
             # TODO: implement `select` to disconnect
             if event.code == "ABS_RZ":
                 power = round(event.state / 10.23, 0)
-            elif event.code == "ABS_RY":
-                if (event.state >= 0 < power) or (event.state < 0 > power):
-                    power = power * (-1)
-                # power = round(event.state/327.67, 0)
                 send_command(s, Protocol.MSG_SPEED, power)
+            elif event.code == "ABS_Z":
+                power = round(event.state / 10.23, 0)
+                send_command(s, Protocol.MSG_SPEED, -power)
+            #elif event.code == "ABS_RY":
+            #    if (event.state >= 0 < power) or (event.state < 0 > power):
+            #        power = power * (-1)
+            #    # power = round(event.state/327.67, 0)
+            #    send_command(s, Protocol.MSG_SPEED, power)
             elif event.code == "ABS_X":
                 steer = round(event.state / 32767, 2)
                 send_command(s, Protocol.MSG_STEER, steer)
