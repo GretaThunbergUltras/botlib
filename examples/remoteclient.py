@@ -16,7 +16,7 @@ class Protocol:
     MSG_SPEED = 256
 
 def send_command(s, cmd, body=None):
-    s.sendall(cmd.encode('ascii'))
+    s.sendall('{}'.format(cmd).encode('ascii'))
 
 def keyboard_to_protocol(inp):
     keymap = {
