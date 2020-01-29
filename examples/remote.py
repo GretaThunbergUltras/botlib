@@ -16,7 +16,7 @@ def stop():
 
 def create_server():
     import socket
-    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(('', PORT))
         s.listen()
         print('listening...')

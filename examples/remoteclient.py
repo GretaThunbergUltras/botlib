@@ -95,7 +95,7 @@ def control_gamepad(s):
 def main():
     import socket
 
-    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         addr = input('address: ')
         s.connect((addr, PORT))
         print('connected.')
