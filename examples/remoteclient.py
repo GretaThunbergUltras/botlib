@@ -1,5 +1,9 @@
 from readchar import readkey, key
+from inputs import devices, get_gamepad
 from remote import PORT, Protocol
+
+def send_command(s, cmd, body=None):
+    s.sendall(cmd.encode('ascii'))
 
 def keyboard_to_protocol(inp):
     keymap = {
@@ -14,9 +18,6 @@ def keyboard_to_protocol(inp):
         return None
     return keymap[inp]
 
-def send_command(s, cmd):
-    s.sendall(cmd.encode('ascii'))
-
 def control_keyboard(s):
     inp = None
     while inp != key.BACKSPACE:
@@ -26,8 +27,30 @@ def control_keyboard(s):
             send_command(s, cmd)
 
 def control_gamepad(s):
-    # TODO: Hi, louis. do stuff here pls
-    pass
+    while True:
+        events = get_gamepad()
+        for event in events:
+            # TODO: implement `select` to disconnect
+            if event.code == "ABS_RZ":
+                power = round(event.state / 10.23, 0)
+            elif event.code == "ABS_RY":
+                if (event.state >= 0 < power) or (event.state < 0 > power):
+                    power = power * (-1)
+                # power = round(event.state/327.67, 0)
+                send_command(s, Protocol.MSG_SPEED, power)
+            elif event.code == "ABS_X":
+                steer = round(event.state / 32767, 2)
+                send_command(s, Protocol.MSG_STEER, steer)
+            elif event.code == "ABS_HAT0X":
+                if event.state == 1:
+                    send_command(s, Protocol.MSG_FORKLIFT_PICKUP)
+                else:
+                    send_command(s, Protocol.MSG_FORKLIFT_CARRY)
+            """if event.code == "ABS_HAT0Y":
+                if event.state == -1:
+                    print("Forklift up")
+                else:
+                    print("Forklift down")"""
 
 def main():
     import socket
@@ -36,7 +59,7 @@ def main():
         addr = input('address: ')
         s.connect((addr, PORT))
 
-        if True:
+        if devices.gamepads:
             control_gamepad(s)
         else:
             control_keyboard(s)
