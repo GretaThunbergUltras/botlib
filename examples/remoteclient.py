@@ -31,7 +31,6 @@ class Protocol:
 def send_command(s, cmd, body=None):
     msg = Protocol.to(cmd, body)
     s.sendall(msg.encode('ascii'))
-    #s.sendall('{}'.format(cmd).encode('ascii'))
 
 def keyboard_to_protocol(inp):
     keymap = {
@@ -55,6 +54,7 @@ def control_keyboard(s):
             send_command(s, cmd)
 
 def control_gamepad(s):
+    power = 0
     while True:
         events = get_gamepad()
         for event in events:

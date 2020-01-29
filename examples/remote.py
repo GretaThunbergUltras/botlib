@@ -53,9 +53,11 @@ def handle_event(cmd, data=None):
     STEP_POWER, STEP_STEER = 10, 0.25
 
     if cmd == Protocol.MSG_SPEED:
-        bot.drive_power(data)
+        pval = data if data != None else 0
+        bot.drive_power(pval)
     if cmd == Protocol.MSG_STEER:
-        bot.drive_steer(data)
+        pval = data if data != None else 0
+        bot.drive_steer(pval)
     if cmd == Protocol.MSG_SPEED_DOWN or cmd == Protocol.MSG_SPEED_UP:
         if data:
             power = data
