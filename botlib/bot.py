@@ -1,3 +1,4 @@
+from .broker import Broker
 from .camera import Camera
 from .forklift import Forklift
 from .motor import CalibratedMotor, Motor
@@ -9,6 +10,9 @@ class Bot:
 
         self._camera = Camera(self)
         self._forklift = Forklift(self)
+
+    def setup_broker(self):
+        self._broker = Broker(self)
 
     def __del__(self):
         self._steer_motor.to_init_position()
