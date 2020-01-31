@@ -16,14 +16,35 @@ class Broker:
 
         :param host: the hoststring for the broker.
         :param port: the port of the broker.
-        :param subscriptions: a dictionary in the form `topic name (string) => function to execute (callback)`.
+        :param subscriptions: a dictionary in the form `topic name (string) => function to execute (callback)`. callback must be 
+        able to receive three arguments - namely `client_id`, `userdata`, `message`.
         """
+        self._host = host
+        self._port = port
+
         self._client = Client()
-        self._client.connect(host, port, 60)
+        self._client.connect(self._host, self._port, 60)
+
+        self._subscribed_thread = None
 
         if subscriptions:
+            self._subscribe(subscriptions)
+
+    def _subscribe(self, subscriptions):
+        from threading import Thread
+
+        def on_connect(client_id, userdata, flags, rc):
+            print('subscribed with code {}'.format(rc))
+
+        def listen():
             for topic, callback in subscriptions.items():
-                pass
+                self._client.callback(callback, topic=topic, hostname=self._host)
+            self._client.loop_forever()
+
+        self._client.on_connect = on_connect
+
+        self._subscribed_thread = Thread(group=None, target=listen, daemon=True)
+        self._subscribed_thread.start()
 
     def _publish(self, topic, payload, qos=0):
         # TODO: add json headers here

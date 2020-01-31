@@ -48,7 +48,8 @@
 &nbsp;<br>
 :param&nbsp;host:&nbsp;the&nbsp;hoststring&nbsp;for&nbsp;the&nbsp;broker.<br>
 :param&nbsp;port:&nbsp;the&nbsp;port&nbsp;of&nbsp;the&nbsp;broker.<br>
-:param&nbsp;subscriptions:&nbsp;a&nbsp;dictionary&nbsp;in&nbsp;the&nbsp;form&nbsp;`topic&nbsp;name&nbsp;(string)&nbsp;=&gt;&nbsp;function&nbsp;to&nbsp;execute&nbsp;(callback)`.</tt></dd></dl>
+:param&nbsp;subscriptions:&nbsp;a&nbsp;dictionary&nbsp;in&nbsp;the&nbsp;form&nbsp;`topic&nbsp;name&nbsp;(string)&nbsp;=&gt;&nbsp;function&nbsp;to&nbsp;execute&nbsp;(callback)`.&nbsp;callback&nbsp;must&nbsp;be&nbsp;<br>
+able&nbsp;to&nbsp;receive&nbsp;three&nbsp;arguments&nbsp;-&nbsp;namely&nbsp;`client_id`,&nbsp;`userdata`,&nbsp;`message`.</tt></dd></dl>
 
 <dl><dt><a name="Broker-send_file"><strong>send_file</strong></a>(self, topic, payload)</dt><dd><tt>Send&nbsp;a&nbsp;file&nbsp;to&nbsp;the&nbsp;broker.<br>
 &nbsp;<br>
