@@ -10,6 +10,12 @@ chmod +x install
 ./install
 ```
 
+## Update Documentation
+
+```
+sudo ./gendocs
+```
+
 ## Fernsteuerung
 
 ```
