@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module botlib.control</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="botlib.html"><font color="#ffffff">botlib</font></a>.control</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/witling/dev/botlib/botlib/control.py">/home/witling/dev/botlib/botlib/control.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="botlib.control.html#Action">Action</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Action">class <strong>Action</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Standardized&nbsp;actions&nbsp;that&nbsp;a&nbsp;`Bot`&nbsp;can&nbsp;execute.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Action-__init__"><strong>__init__</strong></a>(self, cmd, data=None)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Action-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Return&nbsp;str(self).</tt></dd></dl>
+
+<dl><dt><a name="Action-parse"><strong>parse</strong></a>(seq)</dt><dd><tt>Parses&nbsp;a&nbsp;string&nbsp;into&nbsp;an&nbsp;`<a href="#Action">Action</a>`&nbsp;<a href="builtins.html#object">object</a>.<br>
+&nbsp;<br>
+:param&nbsp;seq:&nbsp;a&nbsp;string&nbsp;in&nbsp;the&nbsp;form&nbsp;`&lt;cmd&gt;:&lt;data&gt;`&nbsp;where&nbsp;`&lt;data&gt;`&nbsp;is&nbsp;optional.&nbsp;`&lt;cmd&gt;`&nbsp;must&nbsp;be&nbsp;an&nbsp;int,&nbsp;<br>
+`&lt;data&gt;`&nbsp;must&nbsp;be&nbsp;a&nbsp;float.<br>
+:returns:&nbsp;an&nbsp;`<a href="#Action">Action</a>`&nbsp;<a href="builtins.html#object">object</a>.</tt></dd></dl>
+
+<dl><dt><a name="Action-to"><strong>to</strong></a>(cmd, data=None)</dt><dd><tt>Turn&nbsp;a&nbsp;command&nbsp;and&nbsp;some&nbsp;data&nbsp;into&nbsp;a&nbsp;string.<br>
+&nbsp;<br>
+:param&nbsp;cmd:&nbsp;an&nbsp;integer&nbsp;defining&nbsp;the&nbsp;action.<br>
+:param&nbsp;data:&nbsp;a&nbsp;float&nbsp;containing&nbsp;the&nbsp;payload.<br>
+:returns:&nbsp;a&nbsp;the&nbsp;message&nbsp;as&nbsp;a&nbsp;string.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>FORKLIFT_CARRY</strong> = 64</dl>
+
+<dl><dt><strong>FORKLIFT_HEIGHT_POWER</strong> = 512</dl>
+
+<dl><dt><strong>FORKLIFT_PICKUP</strong> = 32</dl>
+
+<dl><dt><strong>FORKLIFT_ROTATE_POWER</strong> = 1024</dl>
+
+<dl><dt><strong>SPEED</strong> = 256</dl>
+
+<dl><dt><strong>SPEED_DOWN</strong> = 16</dl>
+
+<dl><dt><strong>SPEED_UP</strong> = 8</dl>
+
+<dl><dt><strong>STEER</strong> = 128</dl>
+
+<dl><dt><strong>STEER_LEFT</strong> = 2</dl>
+
+<dl><dt><strong>STEER_RIGHT</strong> = 4</dl>
+
+<dl><dt><strong>STOP</strong> = 1</dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>REMOTE_PORT</strong> = 6666</td></tr></table>
+</body></html>
