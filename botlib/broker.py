@@ -39,12 +39,18 @@ class Broker:
         def on_connect(client_id, userdata, flags, rc):
             print('subscribed with code {}'.format(rc))
 
+        def on_message(client_id, userdata, msg):
+            if msg.topic in self._subscriptions:
+                self._subscriptions[msg.topic](client_id, userdata, msg)
+
         def listen():
-            for topic, callback in subscriptions.items():
-                self._client.callback(callback, topic=topic, hostname=self._host)
+            for topic, _ in subscriptions.items():
+                self._client.subscribe(topic, 0)
             self._client.loop_forever()
 
+        self._subscriptions = subscriptions
         self._client.on_connect = on_connect
+        self._client.on_message = on_message
 
         self._subscribed_thread = Thread(group=None, target=listen, daemon=True)
         self._subscribed_thread.start()
