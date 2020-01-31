@@ -1,0 +1,65 @@
+#!/bin/bash
+
+TITLE='Botlib Documentation'
+DOCS_FOLDER='docs'
+INDEX_FILE="$DOCS_FOLDER/index.html"
+CSS_FILE="$DOCS_FOLDER/stylesheet.css"
+
+function doc_for_module() {
+    for subdir in $(ls -l | grep '^d' | awk '{print $9}'); do
+        for pyfile in $(find "$subdir" -name '*.py'); do
+            location="$subdir.$(basename "${pyfile%.*}")"
+            pydoc3 -w $location
+        done
+    done
+
+    rm -rf $DOCS_FOLDER
+    mkdir -p $DOCS_FOLDER
+
+    for html in $(find . -name '*.html'); do
+        mv $html $DOCS_FOLDER
+    done
+}
+
+function to_file() {
+    echo "$2" >> $1
+}
+
+function generate_index() {
+    rm $INDEX_FILE
+
+    docs=$(find $DOCS_FOLDER -name '*.html' | sort -n)
+
+    to_file $INDEX_FILE "<html><head><title>$TITLE</title>"
+    to_file $INDEX_FILE "<link rel='stylesheet' href='`basename $CSS_FILE`'>"
+    to_file $INDEX_FILE "</head><body><main><h1>$TITLE</h1><ul>"
+
+    for doc in $docs; do
+        location=$(basename $doc)
+        to_file $INDEX_FILE "<li><a href='$location'>${location%.*}</a></li>"
+    done
+
+    to_file $INDEX_FILE "</ul></main></body></html>"
+    echo "wrote $INDEX_FILE"
+}
+
+function generate_stylesheet() {
+    rm $CSS_FILE
+
+    to_file $CSS_FILE "body {background-color:lightgray;font-family: Helvetica, Arial;}"
+    to_file $CSS_FILE "main {background-color:#EEE;padding:5px;}"
+    to_file $CSS_FILE "a {text-decoration:none;}"
+    to_file $CSS_FILE "li {padding:5px;}"
+    echo "wrote $CSS_FILE"
+}
+
+doc_for_module 'botlib'
+generate_index
+generate_stylesheet
+
+case "$1" in
+    "preview")
+        cd $DOCS_FOLDER
+        python3 -m http.server
+    ;;
+esac

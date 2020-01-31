@@ -47,9 +47,9 @@ def run_local():
 
     while inp != key.BACKSPACE:
         inp = readkey()
-        cmd = keyboard_to_protocol
+        cmd = keyboard_to_protocol(inp)
         if cmd != None:
-            handle_event(inp)
+            handle_event(cmd)
     stop()
 
 def handle_event(cmd, data=None):

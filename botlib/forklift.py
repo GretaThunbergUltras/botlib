@@ -1,6 +1,9 @@
 from .motor import CalibratedMotor
 
 class Forklift:
+    """
+    The bots forklift.
+    """
     def __init__(self, bot):
         self._bot = bot
 
@@ -11,10 +14,16 @@ class Forklift:
         self._height_motor.to_init_position()
 
     def stop_all(self):
+        """
+        Stop rotation and height motor.
+        """
         self._rotate_motor.stop()
         self._height_motor.stop()
 
     def calibrate(self):
+        """
+        Find minimum and maximum position for motors.
+        """
         # TODO: standard calibration routine does not work well with this one
         # self._rotate_motor.calibrate()
         self._rotate_motor._pmin = self._rotate_motor._pinit = -128
@@ -23,6 +32,9 @@ class Forklift:
         self._height_motor.calibrate()
 
     def to_carry_mode(self):
+        """
+        Position forklift to carry an object around.
+        """
         # rotate backwards
         self._rotate_motor.change_position(self._rotate_motor._pmax)
 
@@ -30,6 +42,9 @@ class Forklift:
         self._height_motor.to_init_position()
 
     def to_pickup_mode(self):
+        """
+        Position forklift for picking up an object.
+        """
         # rotate forward
         self._rotate_motor.to_init_position()
 

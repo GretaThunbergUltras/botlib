@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module botlib.motor</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="botlib.html"><font color="#ffffff">botlib</font></a>.motor</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/witling/dev/botlib/botlib/motor.py">/home/witling/dev/botlib/botlib/motor.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="array.html">array</a><br>
+</td><td width="25%" valign=top><a href="spidev.html">spidev</a><br>
+</td><td width="25%" valign=top><a href="subprocess.html">subprocess</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="botlib.motor.html#Motor">Motor</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="botlib.motor.html#CalibratedMotor">CalibratedMotor</a>
+</font></dt></dl>
+</dd>
+</dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="CalibratedMotor">class <strong>CalibratedMotor</strong></a>(<a href="botlib.motor.html#Motor">Motor</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>A&nbsp;`<a href="#Motor">Motor</a>`&nbsp;that&nbsp;can&nbsp;be&nbsp;positioned.&nbsp;Due&nbsp;to&nbsp;positions&nbsp;being&nbsp;different&nbsp;on&nbsp;every&nbsp;bot,<br>
+such&nbsp;`<a href="#Motor">Motor</a>`s&nbsp;need&nbsp;to&nbsp;be&nbsp;`calibrated`&nbsp;first.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="botlib.motor.html#CalibratedMotor">CalibratedMotor</a></dd>
+<dd><a href="botlib.motor.html#Motor">Motor</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="CalibratedMotor-__init__"><strong>__init__</strong></a>(self, port, pmin=None, pmax=None, calpow=20)</dt><dd><tt>Create&nbsp;a&nbsp;`<a href="#CalibratedMotor">CalibratedMotor</a>`&nbsp;instance.&nbsp;If&nbsp;<br>
+&nbsp;<br>
+:param&nbsp;port:&nbsp;which&nbsp;BrickPi&nbsp;motor&nbsp;to&nbsp;address.<br>
+:param&nbsp;pmin:&nbsp;the&nbsp;minimum&nbsp;position&nbsp;(if&nbsp;known).<br>
+:param&nbsp;pmax:&nbsp;the&nbsp;maximum&nbsp;position&nbsp;(if&nbsp;known).<br>
+:param&nbsp;calpow:&nbsp;the&nbsp;power&nbsp;with&nbsp;which&nbsp;the&nbsp;motor&nbsp;will&nbsp;be&nbsp;calibrated.</tt></dd></dl>
+
+<dl><dt><a name="CalibratedMotor-calibrate"><strong>calibrate</strong></a>(self)</dt><dd><tt>Determine&nbsp;minimum,&nbsp;maximum&nbsp;and&nbsp;initial&nbsp;position.&nbsp;This&nbsp;sets&nbsp;the&nbsp;motor&nbsp;power&nbsp;to&nbsp;`calpow`<br>
+and&nbsp;waits&nbsp;until&nbsp;the&nbsp;position&nbsp;does&nbsp;not&nbsp;change&nbsp;anymore&nbsp;giving&nbsp;minimum&nbsp;position.&nbsp;Repeat<br>
+process&nbsp;in&nbsp;the&nbsp;opposite&nbsp;direction&nbsp;afterwards.&nbsp;The&nbsp;initial&nbsp;position&nbsp;is&nbsp;the&nbsp;median&nbsp;between&nbsp;both&nbsp;values.<br>
+&nbsp;<br>
+Hacky,&nbsp;but&nbsp;works&nbsp;in&nbsp;most&nbsp;cases.</tt></dd></dl>
+
+<dl><dt><a name="CalibratedMotor-change_position"><strong>change_position</strong></a>(self, pnew)</dt><dd><tt>Set&nbsp;the&nbsp;new&nbsp;position&nbsp;of&nbsp;the&nbsp;motor.<br>
+&nbsp;<br>
+:param&nbsp;pnew:&nbsp;If&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;are&nbsp;known,&nbsp;this&nbsp;value&nbsp;must&nbsp;be&nbsp;between&nbsp;both.</tt></dd></dl>
+
+<dl><dt><a name="CalibratedMotor-position_from_factor"><strong>position_from_factor</strong></a>(self, factor)</dt><dd><tt>Determines&nbsp;the&nbsp;position&nbsp;from&nbsp;a&nbsp;factor.&nbsp;Minimum,&nbsp;maximum&nbsp;and&nbsp;initial&nbsp;position&nbsp;must&nbsp;be&nbsp;known.<br>
+&nbsp;<br>
+:param&nbsp;factor:&nbsp;number&nbsp;between&nbsp;-1.0&nbsp;and&nbsp;1.0.</tt></dd></dl>
+
+<dl><dt><a name="CalibratedMotor-to_init_position"><strong>to_init_position</strong></a>(self)</dt><dd><tt>Reset&nbsp;the&nbsp;motor&nbsp;to&nbsp;its&nbsp;initial&nbsp;position.&nbsp;Throws&nbsp;exception&nbsp;if&nbsp;value&nbsp;is&nbsp;not&nbsp;known.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="botlib.motor.html#Motor">Motor</a>:<br>
+<dl><dt><a name="CalibratedMotor-change_power"><strong>change_power</strong></a>(self, pnew)</dt><dd><tt>Set&nbsp;the&nbsp;new&nbsp;power&nbsp;of&nbsp;the&nbsp;motor.&nbsp;This&nbsp;function&nbsp;gracefully&nbsp;transitions&nbsp;the&nbsp;current&nbsp;power&nbsp;<br>
+to&nbsp;parameter&nbsp;`pnew`.<br>
+&nbsp;<br>
+:param&nbsp;pnew:&nbsp;a&nbsp;value&nbsp;between&nbsp;-100&nbsp;and&nbsp;100.&nbsp;if&nbsp;value&nbsp;is&nbsp;not&nbsp;in&nbsp;range,&nbsp;nothing&nbsp;will&nbsp;be&nbsp;changed.</tt></dd></dl>
+
+<dl><dt><a name="CalibratedMotor-status"><strong>status</strong></a>(self)</dt><dd><tt>Retrieve&nbsp;information&nbsp;about&nbsp;the&nbsp;motor&nbsp;e.g.&nbsp;position,&nbsp;power.</tt></dd></dl>
+
+<dl><dt><a name="CalibratedMotor-stop"><strong>stop</strong></a>(self)</dt><dd><tt>Turn&nbsp;motor&nbsp;power&nbsp;to&nbsp;zero.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="botlib.motor.html#Motor">Motor</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="botlib.motor.html#Motor">Motor</a>:<br>
+<dl><dt><strong>STATUS_POWER</strong> = 1</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Motor">class <strong>Motor</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Wrapper&nbsp;for&nbsp;BrickPi3&nbsp;motor&nbsp;control.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Motor-__init__"><strong>__init__</strong></a>(self, port)</dt><dd><tt>Create&nbsp;a&nbsp;`<a href="#Motor">Motor</a>`&nbsp;instance.<br>
+&nbsp;<br>
+:param&nbsp;port:&nbsp;which&nbsp;BrickPi&nbsp;motor&nbsp;to&nbsp;address.</tt></dd></dl>
+
+<dl><dt><a name="Motor-change_power"><strong>change_power</strong></a>(self, pnew)</dt><dd><tt>Set&nbsp;the&nbsp;new&nbsp;power&nbsp;of&nbsp;the&nbsp;motor.&nbsp;This&nbsp;function&nbsp;gracefully&nbsp;transitions&nbsp;the&nbsp;current&nbsp;power&nbsp;<br>
+to&nbsp;parameter&nbsp;`pnew`.<br>
+&nbsp;<br>
+:param&nbsp;pnew:&nbsp;a&nbsp;value&nbsp;between&nbsp;-100&nbsp;and&nbsp;100.&nbsp;if&nbsp;value&nbsp;is&nbsp;not&nbsp;in&nbsp;range,&nbsp;nothing&nbsp;will&nbsp;be&nbsp;changed.</tt></dd></dl>
+
+<dl><dt><a name="Motor-status"><strong>status</strong></a>(self)</dt><dd><tt>Retrieve&nbsp;information&nbsp;about&nbsp;the&nbsp;motor&nbsp;e.g.&nbsp;position,&nbsp;power.</tt></dd></dl>
+
+<dl><dt><a name="Motor-stop"><strong>stop</strong></a>(self)</dt><dd><tt>Turn&nbsp;motor&nbsp;power&nbsp;to&nbsp;zero.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>STATUS_POWER</strong> = 1</dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>BP_SPI</strong> = &lt;SpiDev object&gt;<br>
+<strong>FIRMWARE_VERSION_REQUIRED</strong> = '1.4.x'<br>
+<strong>division</strong> = _Feature((2, 2, 0, 'alpha', 2), (3, 0, 0, 'alpha', 0), 8192)<br>
+<strong>print_function</strong> = _Feature((2, 6, 0, 'alpha', 2), (3, 0, 0, 'alpha', 0), 65536)</td></tr></table>
+</body></html>

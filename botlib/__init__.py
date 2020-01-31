@@ -1,1 +1,5 @@
-__all__ = ['bot', 'forklift', 'motor']
+"""
+Botlib
+"""
+
+__all__ = ['bot', 'broker', 'forklift', 'motor']
