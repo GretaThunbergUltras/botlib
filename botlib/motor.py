@@ -77,7 +77,7 @@ class CalibratedMotor(Motor):
         :param pmax: the maximum position (if known).
         :param calpow: the power with which the motor will be calibrated.
         """
-        super().__init__(port, pmin, pmax)
+        super().__init__(port)
 
         # power with which the motor will be calibrated
         self._calpow = calpow
