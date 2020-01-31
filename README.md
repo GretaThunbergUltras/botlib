@@ -18,10 +18,10 @@ chmod +x install
 sudo ./gendocs
 ```
 
-## Fernsteuerung
+## Remote control
 
 ```
 sudo python3 examples/remote.py
 ```
 
-> `sudo` wird benötigt, da sonst Berechtigungen fehlen.
+> `sudo` is required.
