@@ -1,5 +1,3 @@
-from .broker import Broker
-from .camera import Camera
 from .forklift import Forklift
 from .motor import CalibratedMotor, Motor
 
@@ -11,14 +9,21 @@ class Bot:
         self._drive_motor = Motor(Motor._bp.PORT_B)
         self._steer_motor = CalibratedMotor(Motor._bp.PORT_D, calpow=30)
 
-        #self._camera = Camera(self)
         self._forklift = Forklift(self)
 
     def setup_broker(self):
+        from .broker import Broker
         """
         Initialize a `Broker` connection.
         """
         self._broker = Broker(self)
+
+    def setup_camera(self):
+        from .camera import Camera
+        """
+        Initialize a `Camera` object.
+        """
+        self._camera = Camera(self)
 
     def __del__(self):
         self._steer_motor.to_init_position()

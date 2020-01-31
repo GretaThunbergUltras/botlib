@@ -44,8 +44,9 @@
 <td colspan=2><tt>Respresents&nbsp;a&nbsp;connection&nbsp;to&nbsp;the&nbsp;MQTT&nbsp;broker.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="Broker-__init__"><strong>__init__</strong></a>(self, host='Broker', port=1883, subscriptions=None)</dt><dd><tt>Create&nbsp;an&nbsp;instance&nbsp;and&nbsp;connect&nbsp;to&nbsp;broker.<br>
+<dl><dt><a name="Broker-__init__"><strong>__init__</strong></a>(self, bot, host='Broker', port=1883, subscriptions=None)</dt><dd><tt>Create&nbsp;an&nbsp;instance&nbsp;and&nbsp;connect&nbsp;to&nbsp;broker.<br>
 &nbsp;<br>
+:param&nbsp;bot:&nbsp;reference&nbsp;to&nbsp;the&nbsp;`Bot`&nbsp;instance.<br>
 :param&nbsp;host:&nbsp;the&nbsp;hoststring&nbsp;for&nbsp;the&nbsp;broker.<br>
 :param&nbsp;port:&nbsp;the&nbsp;port&nbsp;of&nbsp;the&nbsp;broker.<br>
 :param&nbsp;subscriptions:&nbsp;a&nbsp;dictionary&nbsp;in&nbsp;the&nbsp;form&nbsp;`topic&nbsp;name&nbsp;(string)&nbsp;=&gt;&nbsp;function&nbsp;to&nbsp;execute&nbsp;(callback)`.&nbsp;callback&nbsp;must&nbsp;be&nbsp;<br>
