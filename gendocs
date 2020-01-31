@@ -1,0 +1,23 @@
+#!/bin/bash
+
+DOCS_FOLDER='docs'
+
+function doc_for_module() {
+    for subdir in $(ls -l | grep '^d' | awk '{print $9}'); do
+        for pyfile in $(find "$subdir" -name '*.py'); do
+            location="$subdir.$(basename "${pyfile%.*}")"
+            pydoc -w $location
+        done
+    done
+
+    return
+
+    rm -rf $DOCS_FOLDER
+    mkdir -p $DOCS_FOLDER
+
+    for html in $(find . -name '*.html'); do
+        echo $DOCS_FOLDER
+    done
+}
+
+doc_for_module 'botlib'
