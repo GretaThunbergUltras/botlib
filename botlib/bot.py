@@ -20,12 +20,12 @@ class Bot:
         """
         return self._name
 
-    def setup_broker(self):
+    def setup_broker(self, subscriptions=None):
         from .broker import Broker
         """
         Initialize a `Broker` connection.
         """
-        self._broker = Broker(self)
+        self._broker = Broker(self, subscriptions)
 
     def setup_camera(self):
         from .camera import Camera
