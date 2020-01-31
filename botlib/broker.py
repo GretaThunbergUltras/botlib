@@ -70,4 +70,4 @@ class Broker:
         :param topic: mqtt topic to which the message will be published.
         :param payload: the binary content of the file.
         """
-        self._publish(topic, base64.encode(payload))
+        self._publish(topic, base64.b64encode(payload))
