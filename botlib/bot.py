@@ -11,6 +11,15 @@ class Bot:
 
         self._forklift = Forklift(self)
 
+        with open('/etc/hostname', 'r') as hostname:
+            self._name = hostname.read().strip()
+
+    def name(self):
+        """
+        Returns the bot hostname.
+        """
+        return self._name
+
     def setup_broker(self):
         from .broker import Broker
         """
