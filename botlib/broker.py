@@ -10,17 +10,17 @@ class Broker:
     """
     Respresents a connection to the MQTT broker.
     """
-    def __init__(self, bot, host=BROKER_HOST, port=BROKER_PORT, subscriptions=None):
+    def __init__(self, name, host=BROKER_HOST, port=BROKER_PORT, subscriptions=None):
         """
         Create an instance and connect to broker.
 
-        :param bot: reference to the `Bot` instance.
+        :param name: the clients id.
         :param host: the hoststring for the broker.
         :param port: the port of the broker.
         :param subscriptions: a dictionary in the form `topic name (string) => function to execute (callback)`. callback must be 
         able to receive three arguments - namely `client_id`, `userdata`, `message`.
         """
-        self._bot = bot
+        self._name = name
 
         self._host = host
         self._port = port

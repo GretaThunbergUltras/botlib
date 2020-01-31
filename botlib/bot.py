@@ -25,7 +25,7 @@ class Bot:
         """
         Initialize a `Broker` connection.
         """
-        self._broker = Broker(self, subscriptions)
+        self._broker = Broker(self.name(), subscriptions)
 
     def setup_camera(self):
         from .camera import Camera
