@@ -2,4 +2,4 @@
 Botlib
 """
 
-__all__ = ['bot', 'broker', 'forklift', 'motor']
+__all__ = ['bot', 'broker', 'camera', 'control', 'forklift', 'linetrack', 'motor', 'objectdetect', 'sonar']

@@ -1,14 +1,15 @@
 #!/usr/bin/python3
 
-from botlib.bot import bot
+from botlib.bot import Bot
+from botlib.sonar import Sonar
 
 def main():
     bot = Bot()
 
     try:
         while True:
-            distance = bot.sonar().get_distance()
-            print('left:', distance[0], 'left45:', distance[1], 'left_front:', distance[2], 'right_front:', distance[3], 'right45:', distance[4], 'right:', distance[5], 'back:', distance[6])
+            dst = bot.sonar().get_distance()
+            print('left:', dst[Sonar.LEFT], 'left45:', dst[Sonar.LEFT45], 'left_front:', dst[Sonar.LEFT_FRONT], 'right_front:', dst[Sonar.RIGHT_FRONT], 'right45:', dst[Sonar.RIGHT45], 'right:', dst[Sonar.RIGHT], 'back:', dst[Sonar.BACK])
     except KeyboardInterrupt:
         print('ende')
 

@@ -1,4 +1,12 @@
 class Sonic:
+    LEFT = 0
+    LEFT45 = 1
+    LEFT_FRONT = 2
+    RIGHT_FRONT = 3
+    RIGHT_45 = 4
+    RIGHT = 5
+    BACK = 6
+
     def __init__(self, bot):
         import ctypes
         from typing import List, Any, Union
