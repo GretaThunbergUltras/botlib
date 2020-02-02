@@ -14,6 +14,9 @@ class Bot:
         with open('/etc/hostname', 'r') as hostname:
             self._name = hostname.read().strip()
 
+    def __del__(self):
+        self._steer_motor.to_init_position()
+
     def name(self):
         """
         Returns the bot hostname.
@@ -21,21 +24,25 @@ class Bot:
         return self._name
 
     def setup_broker(self, subscriptions=None):
-        from .broker import Broker
         """
         Initialize a `Broker` connection.
         """
+        from .broker import Broker
         self._broker = Broker(self.name(), subscriptions)
 
     def setup_camera(self):
-        from .camera import Camera
         """
         Initialize a `Camera` object.
         """
+        from .camera import Camera
         self._camera = Camera(self)
 
-    def __del__(self):
-        self._steer_motor.to_init_position()
+    def setup_sonar(self):
+        """
+        Initialize a `Sonar` object.
+        """
+        from .sonar import Sonar
+        self._sonar = Sonar(self)
 
     def drive_power(self, pnew):
         """
