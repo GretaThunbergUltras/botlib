@@ -11,8 +11,8 @@ def main():
     with open(fname, 'w') as temp:
         temp.write('Drive {}\n'.format(bot._drive_motor.status()))
         temp.write('Steer {}\n'.format(bot._steer_motor.status()))
-        temp.write('Forklift Rotate {}\n'.format(bot._forklift._rotate_motor.status()))
-        temp.write('Forklift Height {}\n'.format(bot._forklift._height_motor.status()))
+        temp.write('Forklift Rotate {}\n'.format(bot.forklift()._rotate_motor.status()))
+        temp.write('Forklift Height {}\n'.format(bot.forklift()._height_motor.status()))
 
     print('saved motor positions to {}'.format(fname))
 

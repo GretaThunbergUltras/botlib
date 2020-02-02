@@ -9,9 +9,9 @@ def main():
     print('calibrating...')
     bot.calibrate()
 
-    bot._forklift._height_motor.change_power(-10)
+    bot.forklift()._height_motor.change_power(-10)
     cv.waitKey(1000)
-    bot._forklift._height_motor.change_power(0)
+    bot.forklift()._height_motor.change_power(0)
 
     print('run')
     print('starting detection...')

@@ -66,9 +66,9 @@ def handle_event(action):
     elif cmd == Action.STEER:
         bot.drive_steer(pval)
     elif cmd == Action.FORKLIFT_HEIGHT_POWER:
-        bot._forklift._height_motor.change_power(pval)
+        bot.forklift()._height_motor.change_power(pval)
     elif cmd == Action.FORKLIFT_ROTATE_POWER:
-        bot._forklift._rotate_motor.change_power(pval)
+        bot.forklift()._rotate_motor.change_power(pval)
     elif cmd == Action.SPEED_DOWN or cmd == Action.SPEED_UP:
         if action.data:
             power = action.data
@@ -87,9 +87,9 @@ def handle_event(action):
         bot.stop_all()
         power, steer = 0, 0
     elif cmd == Action.FORKLIFT_CARRY:
-        bot._forklift.to_carry_mode()
+        bot.forklift().to_carry_mode()
     elif cmd == Action.FORKLIFT_PICKUP:
-        bot._forklift.to_pickup_mode()
+        bot.forklift().to_pickup_mode()
     elif cmd == Action.STEER:
         pass
     elif cmd == Action.SPEED:
@@ -101,8 +101,8 @@ def main():
     global bot
 
     if '--camera' in sys.argv:
-        bot._camera.start()
-        bot._camera.enable_preview()
+        bot.camera().start()
+        bot.camera().enable_preview()
 
     print('calibrating...')
     bot.calibrate()
@@ -113,7 +113,7 @@ def main():
         run_local()
 
     if '--camera' in sys.argv:
-        bot._camera.stop()
+        bot.camera().stop()
 
 if __name__ == '__main__':
     main()
