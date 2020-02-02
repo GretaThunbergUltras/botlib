@@ -5,6 +5,7 @@ class Camera:
         import picamera
 
         self._bot = bot
+        self._resolution_x, self._resolution_y = (800, 600)
 
         self._cam = picamera.PiCamera()
         self._buffer = picamera.PiCameraCircularIO(self._cam, seconds=Camera.BUFFER_SECONDS)
@@ -23,6 +24,9 @@ class Camera:
             self._cam.__enter__()
             self._buffer.__enter__()
             self._running = True
+
+    def resolution(self):
+        return (self._resolution_x, self._resolution_y)
 
     def enable_preview(self):
         if not self._preview:
