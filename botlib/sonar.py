@@ -1,8 +1,8 @@
-import ctypes
-from typing import List, Any, Union
-
 class Sonic:
     def __init__(self, bot):
+        import ctypes
+        from typing import List, Any, Union
+
         # FIXME: How many sonic devices have you plugged in? default: 7
         self._bot = bot
         self._sensor_count = 7

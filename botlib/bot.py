@@ -113,14 +113,6 @@ class Bot:
         pos = self._steer_motor.position_from_factor(pnew)
         self._steer_motor.change_position(pos)
 
-    def detect_object(self, cascade: str):
-        """
-        Try to detect objects in the current `Camera` frame.
-
-        :param cascade: name of the model to use for detection.
-        """
-        return self._objectdetector.detect(cascade)
-
     def calibrate(self):
         """
         Find minimum and maximum position for motors.

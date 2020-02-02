@@ -17,8 +17,8 @@ def main():
     print('starting detection...')
 
     while True:
-        objects = bot.detect_object('../classifiers/palette.xml')
-        ret, frame = bot.get_capture().read()
+        objects = bot.objectdetector().detect('../classifiers/palette.xml')
+        frame = bot.camera().get_capture().read()
 
         if len(objects) != 0:
             bot.drive_power(30)
