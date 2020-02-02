@@ -1,5 +1,6 @@
 from .forklift import Forklift
 from .motor import CalibratedMotor, Motor
+import cv2
 
 class Bot:
     """
@@ -29,6 +30,19 @@ class Bot:
         """
         from .broker import Broker
         self._broker = Broker(self.name(), subscriptions)
+
+    def detectObject(self, cascade: str):
+        """
+        Detect Objects
+        """
+        from .objectDetection import ObjectDetection
+        detection = ObjectDetection(self)
+        return detection.detect(cascade)
+
+    def getCap(self) -> cv2.VideoCapture:
+        if self._cap is None:
+            self._cap = cv2.VideoCapture(-1)
+        return self._cap
 
     def setup_camera(self):
         """
