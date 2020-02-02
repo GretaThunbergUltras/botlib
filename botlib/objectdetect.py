@@ -1,16 +1,17 @@
 import cv2 as cv
-from botlib.bot import Bot
 
-
-class ObjectDetection:
-
-    def __init__(self, bot: Bot):
+class ObjectDetector:
+    def __init__(self, bot):
         self._bot = bot
+        self._classifier = {}
+
+    def _load_classifier(self, cascade: str):
+        self._classifier[cascade] = cv.CascadeClassifier(cascade)
 
     def detect(self, cascade: str):
-        cascade = cv.CascadeClassifier(cascade)
-
-        bot = self._bot
+        if cascade not in self._classifier:
+            self._load_classifier(cascade)
+        classifier = self._classifier[cascade]
 
         # cv.namedWindow("Trackbars")
         # cv.createTrackbar("min", "Trackbars", 3, 8, nothing)
@@ -20,16 +21,16 @@ class ObjectDetection:
         # cap.set(3, 1280)
         # cap.set(4, 720)
         # cap.set(15, 0.1)
-        ret, frame = bot.getCap().read()
+
+        ret, frame = self._bot.get_capture().read()
         if ret:
             gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
             # gray = cv.resize(gray, (int(gray.shape[1] * cv.getTrackbarPos("size", "Trackbars") / 100),
             #                         int(gray.shape[0] * cv.getTrackbarPos("size", "Trackbars") / 100)))
-            objects = cascade.detectMultiScale(gray, 1.1, 3)
+            objects = classifier.detectMultiScale(gray, 1.1, 3)
             return objects
         else:
-            print("frame is invalid")
-        cv.destroyAllWindows()
+            print('frame is invalid')
 
     # def showImage(self, cascade: str):
     #     objects = self.detect(cascade)

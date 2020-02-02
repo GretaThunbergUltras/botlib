@@ -31,25 +31,26 @@ class Bot:
         from .broker import Broker
         self._broker = Broker(self.name(), subscriptions)
 
-    def detectObject(self, cascade: str):
-        """
-        Detect Objects
-        """
-        from .objectDetection import ObjectDetection
-        detection = ObjectDetection(self)
-        return detection.detect(cascade)
-
-    def getCap(self) -> cv2.VideoCapture:
-        if self._cap is None:
-            self._cap = cv2.VideoCapture(-1)
-        return self._cap
-
     def setup_camera(self):
         """
         Initialize a `Camera` object.
         """
         from .camera import Camera
         self._camera = Camera(self)
+
+    def setup_linetracker(self):
+        """
+        Initialize a `LineTracker` instance.
+        """
+        from .linetrack import LineTracker
+        self._linetracker = LineTracker(self)
+
+    def setup_objectdetector(self):
+        """
+        Initialize an `ObjectDetector` instance.
+        """
+        from .objectdetect import ObjectDetector
+        self._objectdetector = ObjectDetector(self)
 
     def setup_sonar(self):
         """
@@ -74,6 +75,19 @@ class Bot:
         """
         pos = self._steer_motor.position_from_factor(pnew)
         self._steer_motor.change_position(pos)
+
+    def detect_object(self, cascade: str):
+        """
+        Try to detect objects in the current `Camera` frame.
+
+        :param cascade: name of the model to use for detection.
+        """
+        return self._objectdetector.detect(cascade)
+
+    def get_capture(self) -> cv2.VideoCapture:
+        if self._cap is None:
+            self._cap = cv2.VideoCapture(-1)
+        return self._cap
     
     def calibrate(self):
         """
