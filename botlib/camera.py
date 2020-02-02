@@ -48,6 +48,7 @@ class Camera:
         """
         if not self._running:
             self._initialize()
+        # TODO: this is probably crap
         buf = []
         return self._buffer.copy_to(buf, frames=1)
 
