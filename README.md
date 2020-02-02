@@ -18,10 +18,16 @@ chmod +x install
 sudo ./gendocs
 ```
 
-## Remote control
+## Examples
+
+> `sudo` is required for `examples/*`.
+
+### Remote control
 
 ```
 sudo python3 examples/remote.py
 ```
 
-> `sudo` is required.
+## Links
+
+- [picamera](https://picamera.readthedocs.io/en/latest/)

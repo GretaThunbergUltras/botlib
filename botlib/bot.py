@@ -121,11 +121,6 @@ class Bot:
         """
         return self._objectdetector.detect(cascade)
 
-    def get_capture(self) -> cv2.VideoCapture:
-        if self._cap is None:
-            self._cap = cv2.VideoCapture(-1)
-        return self._cap
-    
     def calibrate(self):
         """
         Find minimum and maximum position for motors.

@@ -8,28 +8,49 @@ class Camera:
 
         self._cam = picamera.PiCamera()
         self._buffer = picamera.PiCameraCircularIO(self._cam, seconds=Camera.BUFFER_SECONDS)
-        self._initialized = False
+        self._running = False
 
         self._preview = None
 
     def __del__(self):
         self.stop()
-        if self._initialized:
+        if self._running:
             self._buffer.__exit__()
             self._cam.__exit__()
+
+    def _initialize(self):
+        if not self._running:
+            self._cam.__enter__()
+            self._buffer.__enter__()
+            self._running = True
 
     def enable_preview(self):
         if not self._preview:
             self._preview = CameraPreview(self)
 
     def start(self):
-        if not self._initialized:
-            self._cam.__enter__()
-            self._buffer.__enter__()
-            self._initialized = True
+        """
+        Start recording to the intern buffer.
+        """
+        if not self._running:
+            self._initialize()
         self._cam.start_recording(self._buffer, format='h264')
 
+    def get_capture(self):
+        """
+        Read the last frame from the buffer.
+
+        :returns: A copy of the last frame.
+        """
+        if not self._running:
+            self._initialize()
+        buf = []
+        return self._buffer.copy_to(buf, frames=1)
+
     def stop(self):
+        """
+        Stop recording to the buffer.
+        """
         if self._cam.recording:
             self._cam.stop_recording()
 
