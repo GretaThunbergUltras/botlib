@@ -11,7 +11,7 @@ subs = {
     'test_channel': callback
 }
 
-b = Broker('jockel', subscriptions=subs)
+b = Broker('receiverbot', subscriptions=subs)
 
 while True:
     time.sleep(1)
