@@ -1,6 +1,6 @@
 # botlib
 
-[![Documentation](https://img.shields.io/badge/Documentation-v0.1-green.svg)](https://gretathunbergultras.github.io/botlib/)
+[![Documentation](https://img.shields.io/badge/Documentation-v0.0.1-green.svg)](https://gretathunbergultras.github.io/botlib/)
 
 A python library for working with the infbots.
 
