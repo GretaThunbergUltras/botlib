@@ -1,11 +1,13 @@
-import picamera
-
 class Camera:
+    BUFFER_SECONDS = 20
+
     def __init__(self, bot):
+        import picamera
+
         self._bot = bot
 
         self._cam = picamera.PiCamera()
-        self._buffer = picamera.PiCameraCircularIO(self._cam, seconds=3)
+        self._buffer = picamera.PiCameraCircularIO(self._cam, seconds=Camera.BUFFER_SECONDS)
         self._initialized = False
 
         self._preview = None
@@ -31,6 +33,7 @@ class Camera:
         if self._cam.recording:
             self._cam.stop_recording()
 
+# TODO: replace this by opencv preview
 from tkinter import *
 from PIL import Image, ImageTk
 

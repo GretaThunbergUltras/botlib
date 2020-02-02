@@ -7,13 +7,20 @@ class Bot:
     Control instance for a bot.
     """
     def __init__(self):
+        with open('/etc/hostname', 'r') as hostname:
+            self._name = hostname.read().strip()
+
         self._drive_motor = Motor(Motor._bp.PORT_B)
         self._steer_motor = CalibratedMotor(Motor._bp.PORT_D, calpow=30)
 
-        self._forklift = Forklift(self)
-
-        with open('/etc/hostname', 'r') as hostname:
-            self._name = hostname.read().strip()
+        # submodules of the bot. these will be created lazily by their
+        # corresponding constructors e.g. `bot.forklift()`
+        self._broker = None
+        self._camera = None
+        self._forklift = None
+        self._linetracker = None
+        self._objectdetector = None
+        self._sonar = None
 
     def __del__(self):
         self._steer_motor.to_init_position()
@@ -24,40 +31,70 @@ class Bot:
         """
         return self._name
 
-    def setup_broker(self, subscriptions=None):
+    def broker(self, subscriptions=None):
         """
         Initialize a `Broker` connection.
-        """
-        from .broker import Broker
-        self._broker = Broker(self.name(), subscriptions)
 
-    def setup_camera(self):
+        :return: A `Broker` instance.
+        """
+        if self._broker == None:
+            from .broker import Broker
+            self._broker = Broker(self.name(), subscriptions)
+        return self._broker
+
+    def camera(self):
         """
         Initialize a `Camera` object.
-        """
-        from .camera import Camera
-        self._camera = Camera(self)
 
-    def setup_linetracker(self):
+        :return: A `Camera` instance.
         """
-        Initialize a `LineTracker` instance.
-        """
-        from .linetrack import LineTracker
-        self._linetracker = LineTracker(self)
+        if self._camera == None:
+            from .camera import Camera
+            self._camera = Camera(self)
+        return self._camera
 
-    def setup_objectdetector(self):
+    def forklift(self):
         """
-        Initialize an `ObjectDetector` instance.
-        """
-        from .objectdetect import ObjectDetector
-        self._objectdetector = ObjectDetector(self)
+        Initialize a `Forklift` object.
 
-    def setup_sonar(self):
+        :return: A `Forklift` instance.
+        """
+        if self._forklift == None:
+            self._forklift = Forklift(self)
+        return self._forklift
+
+    def linetracker(self):
+        """
+        Initialize a `LineTracker` object.
+
+        :return: A `LineTracker` instance.
+        """
+        if self._linetracker == None:
+            from .linetrack import LineTracker
+            self._linetracker = LineTracker(self)
+        return self._linetracker
+
+    def objectdetector(self):
+        """
+        Initialize an `ObjectDetector` object.
+
+        :return: An `ObjectDetector` instance.
+        """
+        if self._objectdetector == None:
+            from .objectdetect import ObjectDetector
+            self._objectdetector = ObjectDetector(self)
+        return self._objectdetector
+
+    def sonar(self):
         """
         Initialize a `Sonar` object.
+
+        :return: A `Sonar` instance.
         """
-        from .sonar import Sonar
-        self._sonar = Sonar(self)
+        if self._sonar == None:
+            from .sonar import Sonar
+            self._sonar = Sonar(self)
+        return self._sonar
 
     def drive_power(self, pnew):
         """
