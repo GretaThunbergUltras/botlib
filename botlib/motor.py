@@ -145,7 +145,7 @@ class CalibratedMotor(Motor):
         """
         Reset the motor to its initial position. Throws exception if value is not known.
         """
-        if not self._pinit:
+        if self._pinit == None:
             raise Exception('initial position for motor {} not known'.format(self._port))
         self.change_position(self._pinit)
 
