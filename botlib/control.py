@@ -40,7 +40,7 @@ class Action:
 
         :param cmd: an integer defining the action.
         :param data: a float containing the payload.
-        :returns: a the message as a string.
+        :returns: the message as a string.
         """
         return '{}:{}'.format(cmd,data) if data else '{}'.format(cmd)
 
