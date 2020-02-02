@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from botlib.control import Action, REMOTE_PORT
 from readchar import readkey, key
 from inputs import devices, get_gamepad

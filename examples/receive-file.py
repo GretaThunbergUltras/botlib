@@ -1,7 +1,9 @@
-import base64
-import time
+#!/usr/bin/python3
 
 from botlib.broker import Broker
+
+import base64
+import time
 
 def callback(cid, userdata, msg):
     with open('image.jpeg', 'wb') as out:

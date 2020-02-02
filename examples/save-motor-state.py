@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
-def main():
-    from botlib.bot import Bot
-    from datetime import datetime
+from botlib.bot import Bot
+from datetime import datetime
 
+def main():
     bot = Bot()
     now = str(datetime.now())
     fname = '/tmp/status-{}-{}'.format(now[0:10], now[11:16])

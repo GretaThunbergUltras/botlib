@@ -1,6 +1,11 @@
+#!/usr/bin/python3
+
+"""
+adjust motor position values to default state
+"""
+
 from botlib.bot import Bot
 
-# adjust motor position values to default state
 def main():
     Bot().calibrate()
 

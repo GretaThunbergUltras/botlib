@@ -1,8 +1,15 @@
+#!/usr/bin/python3
+
+"""
+stops all motors
+"""
+
 from botlib.bot import Bot
 
-# checks if the motors are coupled up correctly
-
-if __name__ == '__main__':
+def main():
     print('stopping all...')
     Bot().stop_all()
     print('done...')
+
+if __name__ == '__main__':
+    main()

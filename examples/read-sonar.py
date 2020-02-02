@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from botlib.bot import bot
 
 def main():

@@ -1,6 +1,11 @@
+#!/usr/bin/python3
+
+"""
+checks if the motors are coupled up correctly
+"""
+
 from botlib import *
 
-# checks if the motors are coupled up correctly
 
 if __name__ == '__main__':
     pass
