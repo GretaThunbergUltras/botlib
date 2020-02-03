@@ -1,2 +1,5 @@
 **/__pycache__/*
+botlib/**/*.html
 *.pyc
+/*.html
+.idea

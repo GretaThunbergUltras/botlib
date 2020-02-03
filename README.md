@@ -1,5 +1,7 @@
 # botlib
 
+[![Documentation](https://img.shields.io/badge/Documentation-v0.1-green.svg)](https://gretathunbergultras.github.io/botlib/)
+
 A python library for working with the infbots.
 
 ## Installation
@@ -10,10 +12,16 @@ chmod +x install
 ./install
 ```
 
-## Fernsteuerung
+## Update Documentation
+
+```
+sudo ./gendocs
+```
+
+## Remote control
 
 ```
 sudo python3 examples/remote.py
 ```
 
-> `sudo` wird benötigt, da sonst Berechtigungen fehlen.
+> `sudo` is required.
