@@ -20,6 +20,14 @@ for py_dep in $py_deps; do
     sudo pip3 install $py_dep &>/dev/null
 done
 
+pushd /tmp
+echo "INSTALLING ultrasonic"
+git clone https://github.com/GretaThunbergUltras/ultrasonic
+cd ultrasonic
+sudo chmod +x ./install
+sudo ./install
+popd
+
 # install this library
 echo "INSTALLING botlib"
 sudo pip3 install . --upgrade &>/dev/null

@@ -1,4 +1,7 @@
-class Sonic:
+import ctypes
+from typing import List, Any, Union
+
+class Sonar:
     LEFT = 0
     LEFT45 = 1
     LEFT_FRONT = 2
@@ -8,8 +11,6 @@ class Sonic:
     BACK = 6
 
     def __init__(self, bot):
-        import ctypes
-        from typing import List, Any, Union
 
         self._bot = bot
         # FIXME: How many sonic devices have you plugged in? default: 7
