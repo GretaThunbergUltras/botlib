@@ -1,9 +1,9 @@
+import picamera
+
 class Camera:
     BUFFER_SECONDS = 20
 
     def __init__(self, bot):
-        import picamera
-
         self._bot = bot
         self._resolution_x, self._resolution_y = (800, 600)
 

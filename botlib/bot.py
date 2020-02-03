@@ -118,7 +118,7 @@ class Bot:
         Find minimum and maximum position for motors.
         """
         self._steer_motor.calibrate()
-        self._forklift.calibrate()
+        self.forklift().calibrate()
 
     def stop_all(self):
         """
@@ -126,4 +126,4 @@ class Bot:
         """
         self._drive_motor.stop()
         self._steer_motor.stop()
-        self._forklift.stop_all()
+        self.forklift().stop_all()
