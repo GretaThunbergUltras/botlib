@@ -46,7 +46,7 @@ class Broker:
 
         def listen():
             for topic, _ in subscriptions.items():
-                self._client.subscribe(topic, 0)
+                self._client.subscribe(topic, BROKER_QOS)
             self._client.loop_forever()
 
         self._subscriptions = subscriptions
