@@ -5,6 +5,7 @@ import json
 
 BROKER_HOST = 'Broker'
 BROKER_PORT = 1883
+BROKER_QOS = 1
 
 class Broker:
     """
@@ -55,7 +56,7 @@ class Broker:
         self._subscribed_thread = Thread(group=None, target=listen, daemon=True)
         self._subscribed_thread.start()
 
-    def _publish(self, topic, payload, qos=0):
+    def _publish(self, topic, payload, qos=BROKER_QOS):
         # TODO: add json headers here
         # msg = json.encode()
         self._client.publish(topic, payload, qos=qos)
@@ -67,7 +68,7 @@ class Broker:
         :param topic: mqtt topic to which the message will be published.
         :param payload: the message as string.
         """
-        self._publish(topic, message)
+        self._publish(topic, message, qos=BROKER_QOS)
 
     def send_file(self, topic, payload):
         """
@@ -76,4 +77,4 @@ class Broker:
         :param topic: mqtt topic to which the message will be published.
         :param payload: the binary content of the file.
         """
-        self._publish(topic, base64.b64encode(payload))
+        self._publish(topic, base64.b64encode(payload), qos=BROKER_QOS)
