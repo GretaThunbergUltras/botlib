@@ -6,12 +6,11 @@ class Sonar:
     LEFT45 = 1
     LEFT_FRONT = 2
     RIGHT_FRONT = 3
-    RIGHT_45 = 4
+    RIGHT45 = 4
     RIGHT = 5
     BACK = 6
 
     def __init__(self, bot):
-
         self._bot = bot
         # FIXME: How many sonic devices have you plugged in? default: 7
         self._sensor_count = 7

@@ -27,7 +27,7 @@ class LineTracker:
         be triggered manually using `next(line_tracker)`.
         """
         next_value = self.track_line()
-        return self_pid_controller.correct(next_value)
+        return self._pid_controller.correct(next_value)
 
     def track_line(self):
         """
@@ -105,9 +105,9 @@ class PIDController:
         error = value - self._centerpoint
         self._total_err += error
 
-        proportional = error * self.kp
-        integral = self._total_err * self.ki
-        derivative = (error - self._last_err) * self.kd
+        proportional = error * self._kp
+        integral = self._total_err * self._ki
+        derivative = (error - self._last_err) * self._kd
 
         pidret = proportional + integral + derivative
 
