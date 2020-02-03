@@ -1,7 +1,7 @@
 #!/bin/bash
 
-deps="python3-pil.imagetk libqt4-dev"
-py_deps="opencv-python readchar paho-mqtt"
+deps="python3-pil.imagetk libqt4-dev libjasper-dev"
+py_deps="opencv-python readchar paho-mqtt inputs"
 
 function is_installed() {
     dpkg -l | grep "$1"
