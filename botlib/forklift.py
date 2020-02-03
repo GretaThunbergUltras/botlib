@@ -58,5 +58,5 @@ class Forklift:
         # move fork on the right height
         height = ((height/13.5)*2)-1
         #height = height / (maxHeight/2)-1
-        pos = self.height_motor.position_from_factor(height)
+        pos = self._height_motor.position_from_factor(height)
         self._height_motor.change_position(pos)
