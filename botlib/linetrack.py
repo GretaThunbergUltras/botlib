@@ -88,12 +88,12 @@ class PIDController:
         """
         A PID controller
         """
-        self._centerpoint = 74
+        self._centerpoint = 85
 
         # PID constants
-        self._kp = 1
-        self._ki = 0.001
-        self._kd = 0.2
+        self._kp = 1.8
+        self._ki = 0.002
+        self._kd = 0.6
 
         self._last_err = 0
         self._total_err = 0
@@ -119,11 +119,17 @@ class PIDController:
         if error == 0:
             self._total_err = 0
 
-        if self._total_err > 50:
-            self._total_err = 50
+        if self._total_err < -100:
+            self._total_err = -100
+
+        if self._total_err > 100:
+            self._total_err = 100
 
         if pidret > 100:
             pidret = 100
+
+        if pidret < -100:
+            pidret = -100
 
         self._last_err = error
         self._last_value = value
