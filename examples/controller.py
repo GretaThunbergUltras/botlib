@@ -14,7 +14,7 @@ class Controller:
 
     # PID constants
     kp = 1
-    ki = 0.001
+    ki = 0.01
     kd = 0.2
 
     lastError = 0

@@ -8,7 +8,7 @@ class Forklift:
         self._bot = bot
 
         self._rotate_motor = CalibratedMotor(CalibratedMotor._bp.PORT_C, calpow=70)
-        self._height_motor = CalibratedMotor(CalibratedMotor._bp.PORT_A, calpow=40)
+        self._height_motor = CalibratedMotor(CalibratedMotor._bp.PORT_A, calpow=50)
 
     def __del__(self):
         self._height_motor.to_init_position()
@@ -50,4 +50,13 @@ class Forklift:
 
         # move fork down
         pos = self._height_motor.position_from_factor(-1.0)
+        self._height_motor.change_position(pos)
+
+    def set_custom_height(self, height):
+        # rotate forward
+        self._rotate_motor.to_init_position()
+        # move fork on the right height
+        height = ((height/13.5)*2)-1
+        #height = height / (maxHeight/2)-1
+        pos = self._height_motor.position_from_factor(height)
         self._height_motor.change_position(pos)
