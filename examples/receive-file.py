@@ -11,7 +11,7 @@ def callback(cid, userdata, msg):
 
 def main():
     subs = {
-        'test_channel': callback
+        '/status': callback
     }
 
     b = Broker('receiverbot', subscriptions=subs)
