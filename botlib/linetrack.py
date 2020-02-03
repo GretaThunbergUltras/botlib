@@ -27,7 +27,7 @@ class LineTracker:
         be triggered manually using `next(line_tracker)`.
         """
         next_value = self.track_line()
-        return self._pid_controller.correct(next_value)
+        return self._pid_controller.correct(next_value) if next_value != None else None
 
     def track_line(self):
         """
