@@ -1,5 +1,7 @@
 from .forklift import Forklift
 from .motor import CalibratedMotor, Motor
+from .task import Task
+
 import cv2
 
 class Bot:
@@ -117,7 +119,7 @@ class Bot:
         """
         Find minimum and maximum position for motors.
         """
-        self._steer_motor.calibrate()
+        Task(self._steer_motor.calibrate).start()
         self.forklift().calibrate()
 
     def stop_all(self):

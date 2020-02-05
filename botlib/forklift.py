@@ -1,4 +1,5 @@
 from .motor import CalibratedMotor
+from .task import Task
 
 class Forklift:
     """
@@ -29,7 +30,7 @@ class Forklift:
         self._rotate_motor._pmin = self._rotate_motor._pinit = -128
         self._rotate_motor._pmax = 15603
 
-        self._height_motor.calibrate()
+        Task(self._height_motor.calibrate).start()
 
     def to_carry_mode(self):
         """
