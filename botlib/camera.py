@@ -1,3 +1,5 @@
+import cv2
+
 from vidgear.gears import PiGear
 
 class Camera(object):
@@ -7,7 +9,7 @@ class Camera(object):
         self._resolution = (800, 600)
         self._framerate = 24
 
-        self._stream = PiGear(self._resolution, framerate=self._framerate)
+        self._stream = PiGear(self._resolution, colorspace='COLOR_BGR2LAB', framerate=self._framerate)
         self._running = False
 
     def __del__(self):
@@ -24,17 +26,31 @@ class Camera(object):
             self._stream.start()
             self._running = True
 
-    def capture(self):
+    def read(self):
         """
         Read the last frame from the buffer.
 
         :returns: A copy of the last frame.
         """
-        return self._stream.read()
+        if not self._running:
+            self.start()
+        try:
+            return self._stream.read()
+        except:
+            return None
+
+    def capture(self):
+        """
+        Wrapper for `read`.
+
+        :returns: A copy of the last frame.
+        """
+        return self.read()
 
     def stop(self):
         """
         Stop recording to the buffer.
         """
-        self._stream.stop()
+        if self._running:
+            self._stream.stop()
         self._running = False

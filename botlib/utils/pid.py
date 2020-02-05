@@ -1,19 +1,17 @@
 class PIDController:
-    _x1 = 320.0
-    _y1 = 480.0
-    _x2 = 320.0
-    _y2 = 380.0
-
-    def __init__(self):
+    def __init__(self, cp, p, i, d):
         """
         A PID controller
         """
-        self._centerpoint = 85
+        self._centerpoint = cp
 
+        self._kp = p
+        self._ki = i
+        self._kd = d
         # PID constants
-        self._kp = 1.8
-        self._ki = 0.002
-        self._kd = 0.6
+        #self._kp = 1.8
+        #self._ki = 0.002
+        #self._kd = 0.6
 
         self._last_err = 0
         self._total_err = 0

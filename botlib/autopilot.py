@@ -24,13 +24,8 @@ class Autopilot(object):
         self._bot = bot
         self._pid = PIDController()
 
-        # TODO: access `bot` camera here
-        self.video_capture = cv2.VideoCapture(0)
-        self.video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 160)
-        self.video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 120)
-
         from .linetracking import LRTracker
-        self._tracker = LRTracker(self.video_capture)
+        self._tracker = LRTracker(self._bot.camera())
 
         self._track_process = None
         self._track_active = False
