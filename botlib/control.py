@@ -17,6 +17,7 @@ class Action:
     SPEED = 256
     FORKLIFT_HEIGHT_POWER = 512
     FORKLIFT_ROTATE_POWER = 1024
+    FOLLOW_LINE = 2048
 
     def __init__(self, cmd, data=None):
         self.cmd = cmd

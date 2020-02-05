@@ -15,7 +15,8 @@ def keyboard_to_action(inp):
         key.DOWN: Action.SPEED_DOWN,
         key.SPACE: Action.STOP,
         'w': Action.FORKLIFT_PICKUP,
-        's': Action.FORKLIFT_CARRY
+        's': Action.FORKLIFT_CARRY,
+        'f': Action.FOLLOW_LINE
     }
     if inp not in keymap:
         return None
