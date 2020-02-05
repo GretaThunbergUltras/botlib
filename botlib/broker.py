@@ -77,4 +77,6 @@ class Broker:
         :param topic: mqtt topic to which the message will be published.
         :param payload: the binary content of the file.
         """
+        # TODO: if payload is binary data, this will actually translate str(payload)
+        # to binary. use base64.encode(input_file, output_file) to encode data
         self._publish(topic, base64.b64encode(payload), qos=BROKER_QOS)
