@@ -20,10 +20,10 @@ class Bot(object):
 
         # submodules of the bot. these will be created lazily by their
         # corresponding constructors e.g. `bot.forklift()`
+        self._autopilot = None
         self._broker = None
         self._camera = None
         self._forklift = None
-        self._linetracker = None
         self._objectdetector = None
         self._sonar = None
 
@@ -71,16 +71,16 @@ class Bot(object):
             self._forklift = Forklift(self)
         return self._forklift
 
-    def linetracker(self):
+    def autopilot(self):
         """
-        Initialize a `LineTracker` object.
+        Initialize an `Autopilot` object.
 
-        :return: A `LineTracker` instance.
+        :return: A `Autopilot` instance.
         """
-        if self._linetracker == None:
-            from .linetrack import LineTracker
-            self._linetracker = LineTracker(self)
-        return self._linetracker
+        if self._autopilot == None:
+            from .autopilot import Autopilot
+            self._autopilot = Autopilot(self)
+        return self._autopilot
 
     def objectdetector(self):
         """

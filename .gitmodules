@@ -1,0 +1,3 @@
+[submodule "botlib/linetracking"]
+	path = botlib/linetracking
+	url = https://github.com/GretaThunbergUltras/linetracking
