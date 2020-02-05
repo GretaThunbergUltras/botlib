@@ -4,6 +4,7 @@ import os
 class Config(object):
     CONFIG_DIR = '/home/pi/botconf'
     MOTOR_CONFIG = 'motors.json'
+    STEER_PID_CONFIG = 'steer_pid.json'
 
     def __init__(self, path=None):
         if not os.path.exists(Config.CONFIG_DIR):

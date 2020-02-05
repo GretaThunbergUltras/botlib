@@ -2,6 +2,7 @@ import numpy as np
 import math
 import cv2
 
+from .config import Config
 from .utils import PIDController
 from threading import Thread
 
@@ -22,7 +23,9 @@ class Autopilot(object):
         A class that delivers values correcting the bots steer direction.
         """
         self._bot = bot
-        self._pid = PIDController()
+
+        # self._pid_config = Config(Config.STEER_PID_CONFIG)
+        self._pid = PIDController(cp=85, p=1.8, i=0.002, d=0.6)
 
         from .linetracking import LRTracker
         self._tracker = LRTracker(self._bot.camera())
