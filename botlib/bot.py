@@ -121,9 +121,9 @@ class Bot:
         """
         steer_task = Task(self._steer_motor.calibrate)
         steer_task.start()
-        steer_task.join()
 
         self.forklift().calibrate()
+        steer_task.join()
 
     def stop_all(self):
         """
