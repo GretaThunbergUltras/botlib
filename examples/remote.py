@@ -6,7 +6,6 @@ from readchar import readkey, key
 
 bot = Bot()
 power, steer = 0, 0.0
-lt = None
 
 def clamp(vmin, v, vmax):
     return max(vmin, min(v, vmax))
@@ -52,35 +51,8 @@ def run_local():
             handle_event(action)
     stop()
 
-class LineTracker:
-    def __init__(self):
-        self.active = False
-        self._setup()
-
-    def _setup(self):
-        from threading import Thread
-        from time import sleep
-
-        global bot
-
-        def follow():
-            global bot
-
-            lt = bot.linetracker()
-
-            for improve in lt:
-                if improve != None:
-                    bot.drive_steer(improve)
-
-                while not self.active:
-                    sleep(0.1)
-
-        thread = Thread(group=None, target=follow, daemon=True)
-        thread.start()
-
 def handle_event(action):
     global bot
-    global lt
     global power
     global steer
 
@@ -123,13 +95,13 @@ def handle_event(action):
     elif cmd == Action.SPEED:
         pass
     elif cmd == Action.FOLLOW_LINE:
-        lt.active = not lt.active
+        bot.linetracker().autopilot(not bot.linetracker()._track_active)
+        print('line tracking active?', bot.linetracker()._track_active)
 
 def main():
     import sys
 
     global bot
-    global lt
 
     if '--camera' in sys.argv:
         bot.camera().start()
@@ -138,7 +110,7 @@ def main():
     print('calibrating...')
     bot.calibrate()
 
-    lt = LineTracker()
+    bot.linetracker().autopilot(False)
 
     if '--server' in sys.argv:
         create_server()

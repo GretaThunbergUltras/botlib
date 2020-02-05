@@ -2,7 +2,7 @@ import numpy as np
 import math
 import cv2 as cv
 
-from multiprocessing import Process, Condition
+from threading import Thread
 
 class LineTracker:
     def __init__(self, bot):
@@ -13,7 +13,6 @@ class LineTracker:
         self._pid_controller = PIDController()
 
         self._track_process = None
-        self._track_wakeup = None
         self._track_active = False
 
         # TODO: access `bot` camera here
@@ -39,22 +38,18 @@ class LineTracker:
         from time import sleep
 
         def follow():
-            self._track_wakeup.acquire()
-
-            if not self._track_active:
-                self._track_wakeup.wait()
+            while not self._track_active:
+                sleep(0.2)
 
             for improve in self:
                 if improve != None:
                     self._bot.drive_steer(improve)
 
-                if not self._track_active:
-                    self._track_wakeup.wait()
+                while not self._track_active:
+                    sleep(0.2)
 
-            self._track_wakeup.release()
-
-        self._track_wakeup = Condition()
-        self._track_process = Process(group=None, target=follow, daemon=True)
+        self._track_process = Thread(group=None, target=follow, daemon=True)
+        self._track_process.start()
 
     def autopilot(self, active: bool):
         """
@@ -62,15 +57,10 @@ class LineTracker:
 
         :param active: a bool that enables/disables automatic steering.
         """
-        if self._track_process == None:
-            self._setup_autopilot()
-            self._track_process.start()
-
         self._track_active = active
 
-        self._track_wakeup.acquire()
-        self._track_wakeup.notify()
-        self._track_wakeup.release()
+        if self._track_process == None:
+            self._setup_autopilot()
 
     def track_line(self):
         """
