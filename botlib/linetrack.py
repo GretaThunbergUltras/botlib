@@ -4,6 +4,17 @@ import cv2 as cv
 
 from threading import Thread
 
+#import time
+#traces = {}
+#def trace(idx: str):
+#    global traces
+#    if idx not in traces:
+#        traces[idx] = time.time()
+#    else:
+#        now = time.time()
+#        print('delta {}: {}'.format(idx, now - traces[idx]))
+#        traces[idx] = now
+
 class LineTracker:
     def __init__(self, bot):
         """
@@ -42,6 +53,7 @@ class LineTracker:
                 sleep(0.2)
 
             for improve in self:
+                # trace('linetracking')
                 if improve != None:
                     self._bot.drive_steer(improve)
 
@@ -146,7 +158,7 @@ class PIDController:
 
         #set last_err and _total_err to 0 when value passes _centerpoint
         if (self._last_value > self._centerpoint and value < self._centerpoint) or (self._last_value<self._centerpoint and value>self._centerpoint):
-            self._last_err = -1
+            self._last_err = 0
             self._total_err = 0
 
         if error == 0:
