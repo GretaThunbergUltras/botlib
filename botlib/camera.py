@@ -9,7 +9,7 @@ class Camera(object):
         self._resolution = (800, 600)
         self._framerate = 24
 
-        self._stream = PiGear(self._resolution, colorspace='COLOR_BGR2LAB', framerate=self._framerate)
+        self._stream = PiGear(self._resolution, framerate=self._framerate)
         self._running = False
 
     def __del__(self):
