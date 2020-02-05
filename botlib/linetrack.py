@@ -2,6 +2,8 @@ import numpy as np
 import math
 import cv2 as cv
 
+from multiprocessing import Process, Condition
+
 class LineTracker:
     def __init__(self, bot):
         """
@@ -9,8 +11,10 @@ class LineTracker:
         """
         self._bot = bot
         self._pid_controller = PIDController()
-        self._track_active = False
+
         self._track_process = None
+        self._track_wakeup = None
+        self._track_active = False
 
         # TODO: access `bot` camera here
         self.video_capture = cv.VideoCapture(0)
@@ -32,20 +36,24 @@ class LineTracker:
         return self._pid_controller.correct(next_value) if next_value != None else None
 
     def _setup_autopilot(self):
-        from multiprocessing import Process
         from time import sleep
 
         def follow():
-            while not self._track_active:
-                sleep(0.2)
+            self._track_wakeup.acquire()
+
+            if not self._track_active:
+                self._track_wakeup.wait()
 
             for improve in self:
                 if improve != None:
                     self._bot.drive_steer(improve)
 
-                while not self._track_active:
-                    sleep(0.2)
+                if not self._track_active:
+                    self._track_wakeup.wait()
 
+            self._track_wakeup.release()
+
+        self._track_wakeup = Condition()
         self._track_process = Process(group=None, target=follow, daemon=True)
 
     def autopilot(self, active: bool):
@@ -59,6 +67,10 @@ class LineTracker:
             self._track_process.start()
 
         self._track_active = active
+
+        self._track_wakeup.acquire()
+        self._track_wakeup.notify()
+        self._track_wakeup.release()
 
     def track_line(self):
         """
