@@ -1,6 +1,6 @@
-from .brickpi3 import *
+from .utils import BrickPi3
 
-class Motor:
+class Motor(object):
     """
     Wrapper for BrickPi3 motor control.
     """

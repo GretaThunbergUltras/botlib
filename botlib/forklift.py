@@ -1,7 +1,7 @@
 from .motor import CalibratedMotor
 from .utils import Task
 
-class Forklift:
+class Forklift(object):
     """
     The bots forklift.
     """

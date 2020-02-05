@@ -1,7 +1,7 @@
 import ctypes
 from typing import List, Any, Union
 
-class Sonar:
+class Sonar(object):
     LEFT = 0
     LEFT45 = 1
     LEFT_FRONT = 2

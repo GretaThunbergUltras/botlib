@@ -17,7 +17,7 @@ from .utils import PIDController
 #        print('delta {}: {}'.format(idx, now - traces[idx]))
 #        traces[idx] = now
 
-class LineTracker:
+class LineTracker(object):
     def __init__(self, bot):
         """
         A class that delivers values correcting the bots steer direction.

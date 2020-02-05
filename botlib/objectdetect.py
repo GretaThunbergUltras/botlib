@@ -1,6 +1,6 @@
 import cv2 as cv
 
-class ObjectDetector:
+class ObjectDetector(object):
     def __init__(self, bot):
         self._bot = bot
         self._classifier = {}

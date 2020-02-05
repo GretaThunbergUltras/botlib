@@ -1,6 +1,6 @@
 from vidgear.gears import PiGear
 
-class Camera:
+class Camera(object):
     def __init__(self, bot):
         self._bot = bot
 

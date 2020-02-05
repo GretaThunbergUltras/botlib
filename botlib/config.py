@@ -1,7 +1,7 @@
 import json
 import os
 
-class Config:
+class Config(object):
     CONFIG_DIR = '/home/pi/botconf'
     MOTOR_CONFIG = 'motors.json'
 

@@ -7,7 +7,7 @@ BROKER_HOST = 'Broker'
 BROKER_PORT = 1883
 BROKER_QOS = 1
 
-class Broker:
+class Broker(object):
     """
     Respresents a connection to the MQTT broker.
     """

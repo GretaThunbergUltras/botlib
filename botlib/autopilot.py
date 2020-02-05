@@ -1,0 +1,2 @@
+class Autopilot(object):
+    pass

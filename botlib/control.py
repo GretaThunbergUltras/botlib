@@ -1,6 +1,6 @@
 REMOTE_PORT = 6666
 
-class Action:
+class Action(object):
     """
     Standardized actions that a `Bot` can execute.
     """

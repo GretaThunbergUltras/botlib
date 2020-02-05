@@ -5,7 +5,7 @@ from .utils import Task
 
 import cv2
 
-class Bot:
+class Bot(object):
     """
     Control instance for a bot.
     """
