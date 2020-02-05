@@ -1,17 +1,18 @@
-from botlib.bot import Bot
 import cv2 as cv
-from controller import Controller
 import time
+from botlib.bot import Bot
+from controller import Controller
 
 bot = Bot()
 last_detected = 0
 
-
 def main():
     global bot
     global last_detected
+
     print("calibrating...")
     bot.calibrate()
+
     time.sleep(1)
     print("forklift down...")
     bot._forklift._height_motor.change_power(-100)
@@ -20,9 +21,10 @@ def main():
     bot._forklift._height_motor.change_power(0)
 
     print("Forklift frontwards")
-    bot._forklift._rotate_motor.change_power(-100)
-    time.sleep(3)
+    bot._forklift._rotate_motor.change_power(100)
+    time.sleep(6)
     bot._forklift._rotate_motor.change_power(0)
+
     print("run")
     print("starting detection...")
     while True:
@@ -65,13 +67,11 @@ def main():
                 time.sleep(1.6)
                 bot._forklift._height_motor.change_power(0)
                 break
-        cv.imshow("Object Detection", frame)
+        #cv.imshow("Object Detection", frame)
         if cv.waitKey(1) == 27:
             break
 
     print("Palette wurde aufgehoben")
 
-
 if __name__ == '__main__':
     main()
-
