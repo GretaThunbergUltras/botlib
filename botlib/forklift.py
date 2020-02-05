@@ -1,5 +1,5 @@
 from .motor import CalibratedMotor
-from .task import Task
+from .utils import Task
 
 class Forklift:
     """

@@ -1,7 +1,7 @@
 from .config import Config
 from .forklift import Forklift
 from .motor import CalibratedMotor, Motor
-from .task import Task
+from .utils import Task
 
 import cv2
 
