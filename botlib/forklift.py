@@ -30,7 +30,9 @@ class Forklift:
         self._rotate_motor._pmin = self._rotate_motor._pinit = -128
         self._rotate_motor._pmax = 15603
 
-        Task(self._height_motor.calibrate).start()
+        height_task = Task(self._height_motor.calibrate)
+        height_task.start()
+        height_task.join()
 
     def to_carry_mode(self):
         """

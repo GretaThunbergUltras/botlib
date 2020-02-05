@@ -15,3 +15,9 @@ class Task:
         Start the `Task`.
         """
         self._thread.start()
+
+    def join(self):
+        """
+        Wait for the `Task` to finish.
+        """
+        self._thread.join()

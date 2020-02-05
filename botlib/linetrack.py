@@ -49,16 +49,21 @@ class LineTracker:
         from time import sleep
 
         def follow():
-            while not self._track_active:
-                sleep(0.2)
-
-            for improve in self:
-                # trace('linetracking')
-                if improve != None:
-                    self._bot.drive_steer(improve)
-
+            try:
                 while not self._track_active:
                     sleep(0.2)
+
+                for improve in self:
+                    # trace('linetracking')
+                    if improve != None:
+                        self._bot.drive_steer(improve)
+
+                    while not self._track_active:
+                        sleep(0.2)
+            except KeyboardInterrupt:
+                pass
+            finally:
+                self._bot.stop_all()
 
         self._track_process = Thread(group=None, target=follow, daemon=True)
         self._track_process.start()

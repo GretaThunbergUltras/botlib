@@ -119,7 +119,10 @@ class Bot:
         """
         Find minimum and maximum position for motors.
         """
-        Task(self._steer_motor.calibrate).start()
+        steer_task = Task(self._steer_motor.calibrate)
+        steer_task.start()
+        steer_task.join()
+
         self.forklift().calibrate()
 
     def stop_all(self):
