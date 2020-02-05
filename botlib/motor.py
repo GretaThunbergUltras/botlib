@@ -20,6 +20,11 @@ class Motor(object):
         # TODO: remove this limitation once we have proper power management
         self._bp.set_motor_limits(self._port, 85)
 
+        if not (-100 <= self.status()[Motor.STATUS_POWER] <= 100):
+            pass
+            # TODO: handle out of bounds power
+            #raise Exception('motor power for {} out of bounds'.format(self._port))
+
     def status(self):
         """
         Retrieve information about the motor e.g. position, power.
