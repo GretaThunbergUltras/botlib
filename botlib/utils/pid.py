@@ -9,11 +9,6 @@ class PIDController:
         self._ki = i
         self._kd = d
 
-        # PID constants
-        #self._kp = 1.8
-        #self._ki = 0.002
-        #self._kd = 0.6
-
         self._last_err = 0
         self._total_err = 0
         self._last_value = 0
