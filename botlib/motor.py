@@ -68,7 +68,7 @@ class CalibratedMotor(Motor):
     such `Motor`s need to be `calibrated` first.
     """
 
-    def __init__(self, port, pmin=None, pmax=None, calpow=20):
+    def __init__(self, port, pmin=None, pmax=None, calpow=20, bot=None):
         """
         Create a `CalibratedMotor` instance. If 
 
@@ -78,6 +78,8 @@ class CalibratedMotor(Motor):
         :param calpow: the power with which the motor will be calibrated.
         """
         super().__init__(port)
+
+        self._bot = bot
 
         # power with which the motor will be calibrated
         self._calpow = calpow
@@ -104,6 +106,16 @@ class CalibratedMotor(Motor):
         """
         import time
 
+        if self._bot != None:
+            cachepos = self._bot.config().motor_config(self._port)
+            print('config for', self._port, cachepos)
+            if cachepos != None:
+                self._pmin = cachepos['min']
+                self._pmax = cachepos['max']
+                self._pinit = cachepos['mid']
+                self.to_init_position()
+                return
+
         CALIBRATE_SLEEP = 0.75
 
         self.change_power(-self._calpow)
@@ -129,6 +141,15 @@ class CalibratedMotor(Motor):
 
         self._pinit = (self._pmax + self._pmin) * 0.5
         time.sleep(0.5)
+
+        if self._bot != None:
+            config = {
+                'min': self._pmin,
+                'max': self._pmax,
+                'mid': self._pinit,
+            }
+            self._bot.config().set_motor_config(self._port, config)
+
         self.to_init_position()
 
     def change_position(self, pnew):

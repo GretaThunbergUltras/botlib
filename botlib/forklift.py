@@ -8,8 +8,8 @@ class Forklift:
     def __init__(self, bot):
         self._bot = bot
 
-        self._rotate_motor = CalibratedMotor(CalibratedMotor._bp.PORT_C, calpow=70)
-        self._height_motor = CalibratedMotor(CalibratedMotor._bp.PORT_A, calpow=40)
+        self._rotate_motor = CalibratedMotor(CalibratedMotor._bp.PORT_C, calpow=70, bot=bot)
+        self._height_motor = CalibratedMotor(CalibratedMotor._bp.PORT_A, calpow=40, bot=bot)
 
     def __del__(self):
         self._height_motor.to_init_position()

@@ -2,3 +2,4 @@
 botlib/**/*.html
 *.pyc
 /*.html
+motorconf

@@ -1,3 +1,4 @@
+from .config import Config
 from .forklift import Forklift
 from .motor import CalibratedMotor, Motor
 from .task import Task
@@ -12,8 +13,10 @@ class Bot:
         with open('/etc/hostname', 'r') as hostname:
             self._name = hostname.read().strip()
 
+        self._config = Config()
+
         self._drive_motor = Motor(Motor._bp.PORT_B)
-        self._steer_motor = CalibratedMotor(Motor._bp.PORT_D, calpow=30)
+        self._steer_motor = CalibratedMotor(Motor._bp.PORT_D, calpow=30, bot=self)
 
         # submodules of the bot. these will be created lazily by their
         # corresponding constructors e.g. `bot.forklift()`
@@ -54,6 +57,9 @@ class Bot:
             from .camera import Camera
             self._camera = Camera(self)
         return self._camera
+
+    def config(self):
+        return self._config
 
     def forklift(self):
         """
