@@ -23,7 +23,7 @@ class Camera(object):
         """
         Read the recordings frame resolution.
 
-        :returns: a tuple in the form (width, height)
+        :return: a tuple in the form (width, height)
         """
         return self._resolution
 
@@ -39,7 +39,7 @@ class Camera(object):
         """
         Read the last frame from the buffer.
 
-        :returns: A copy of the last frame.
+        :return: A copy of the last frame.
         """
         if not self._running:
             self.start()
@@ -52,7 +52,7 @@ class Camera(object):
         """
         Wrapper for `read`.
 
-        :returns: A copy of the last frame.
+        :return: A copy of the last frame.
         """
         return self.read()
 

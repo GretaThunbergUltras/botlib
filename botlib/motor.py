@@ -9,13 +9,15 @@ class Motor(object):
 
     STATUS_POWER = 1
 
-    def __init__(self, port):
+    def __init__(self, bot, port):
         """
         Create a `Motor` instance.
 
         :param port: which BrickPi motor to address.
         """
+        self._bot = bot
         self._port = port
+        self._log = self._bot.log().new_motor(self._port)
 
         # TODO: remove this limitation once we have proper power management
         self._bp.set_motor_limits(self._port, 85)
@@ -61,6 +63,8 @@ class Motor(object):
             time.sleep(0.25)
         self._bp.set_motor_power(self._port, pnew)
 
+        self._log.change_power(pnew)
+
     def stop(self):
         """
         Turn motor power to zero.
@@ -73,7 +77,7 @@ class CalibratedMotor(Motor):
     such `Motor`s need to be `calibrated` first.
     """
 
-    def __init__(self, port, pmin=None, pmax=None, calpow=20, bot=None):
+    def __init__(self, bot, port, pmin=None, pmax=None, calpow=20):
         """
         Create a `CalibratedMotor` instance. If 
 
@@ -82,9 +86,7 @@ class CalibratedMotor(Motor):
         :param pmax: the maximum position (if known).
         :param calpow: the power with which the motor will be calibrated.
         """
-        super().__init__(port)
-
-        self._bot = bot
+        super().__init__(bot, port)
 
         # power with which the motor will be calibrated
         self._calpow = calpow
@@ -166,6 +168,8 @@ class CalibratedMotor(Motor):
         if (self._pmin and self._pmax) and not (self._pmin <= pnew <= self._pmax):
             raise Exception('position ({} < {} < {}) is invalid for motor {}'.format(self._pmin, pnew, self._pmax, self._port))
         self._bp.set_motor_position(self._port, pnew)
+
+        self._log.change_position(pnew)
 
     def to_init_position(self):
         """

@@ -29,7 +29,7 @@ class Action(object):
 
         :param seq: a string in the form `<cmd>:<data>` where `<data>` is optional. `<cmd>` must be an int, 
         `<data>` must be a float.
-        :returns: an `Action` object.
+        :return: an `Action` object.
         """
         parts = seq.split(':')
         data = float(parts[1]) if 2 <= len(parts) else None
@@ -41,7 +41,7 @@ class Action(object):
 
         :param cmd: an integer defining the action.
         :param data: a float containing the payload.
-        :returns: the message as a string.
+        :return: the message as a string.
         """
         return '{}:{}'.format(cmd,data) if data else '{}'.format(cmd)
 

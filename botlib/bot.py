@@ -1,5 +1,6 @@
 from .config import ConfigSet
 from .forklift import Forklift
+from .log import Log
 from .motor import CalibratedMotor, Motor
 from .utils import Task
 
@@ -14,9 +15,10 @@ class Bot(object):
             self._name = hostname.read().strip()
 
         self._config = ConfigSet
+        self._log = Log()
 
-        self._drive_motor = Motor(Motor._bp.PORT_B)
-        self._steer_motor = CalibratedMotor(Motor._bp.PORT_D, calpow=30, bot=self)
+        self._drive_motor = Motor(self, Motor._bp.PORT_B)
+        self._steer_motor = CalibratedMotor(self, Motor._bp.PORT_D, calpow=30)
 
         # submodules of the bot. these will be created lazily by their
         # corresponding constructors e.g. `bot.forklift()`
@@ -35,6 +37,17 @@ class Bot(object):
         Returns the bot hostname.
         """
         return self._name
+
+    def autopilot(self):
+        """
+        Initialize an `Autopilot` object.
+
+        :return: A `Autopilot` instance.
+        """
+        if self._autopilot == None:
+            from .autopilot import Autopilot
+            self._autopilot = Autopilot(self)
+        return self._autopilot
 
     def broker(self, subscriptions=None):
         """
@@ -71,16 +84,11 @@ class Bot(object):
             self._forklift = Forklift(self)
         return self._forklift
 
-    def autopilot(self):
+    def log(self):
         """
-        Initialize an `Autopilot` object.
-
-        :return: A `Autopilot` instance.
+        :return: the current `Log` instance.
         """
-        if self._autopilot == None:
-            from .autopilot import Autopilot
-            self._autopilot = Autopilot(self)
-        return self._autopilot
+        return self._log
 
     def objectdetector(self):
         """

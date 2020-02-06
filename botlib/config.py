@@ -15,7 +15,7 @@ class ConfigSet(object):
 
     def motor():
         """
-        :returns: an instance of `MotorConfig`
+        :return: an instance of `MotorConfig`
         """
         if ConfigSet._motor is None:
             ConfigSet._motor = MotorConfig()
@@ -23,7 +23,7 @@ class ConfigSet(object):
 
     def steer_pid():
         """
-        :returns: an instance of `SteerPIDConfig`
+        :return: an instance of `SteerPIDConfig`
         """
         if ConfigSet._steer_pid is None:
             ConfigSet._steer_pid = SteerPIDConfig()
@@ -59,7 +59,7 @@ class Config(object):
         """
         Called when the configuration file is initialized inside the filesystem.
 
-        :returns: either `dict` with the default key-value-pairs or `None`
+        :return: either `dict` with the default key-value-pairs or `None`
         """
         return None
 

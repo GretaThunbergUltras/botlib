@@ -60,7 +60,7 @@ class Autopilot(object):
 
     def is_active(self):
         """
-        :returns: a bool indicating the active state.
+        :return: a bool indicating the active state.
         """
         return self._track_active
 
