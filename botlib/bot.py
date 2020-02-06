@@ -15,7 +15,7 @@ class Bot(object):
             self._name = hostname.read().strip()
 
         self._config = ConfigSet
-        self._log = Log()
+        self._log = Log(self._config.LOG_DIR)
 
         self._drive_motor = Motor(self, Motor._bp.PORT_B)
         self._steer_motor = CalibratedMotor(self, Motor._bp.PORT_D, calpow=30)

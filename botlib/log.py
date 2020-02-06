@@ -29,11 +29,23 @@ class LogMotor(LogInput):
         self._update(ty='change_position_factor', port=self._port, value=nv)
 
 class Log(object):
-    def __init__(self):
-        pass
+    def __init__(self, logdir):
+        import os
+
+        if not os.path.exists(logdir):
+            os.makedirs(logdir)
+
+        fname = '{}.log'.format(datetime.now().isoformat())
+        self._logfname = os.path.join(logdir, fname)
+        # TODO: close file gracefully
+        self._logfile = open(self._logfname, 'w')
 
     def update(self, td, **kwargs):
-        print('[LOG]', td, kwargs)
+        # print('[LOG]', td, kwargs)
+        kwargs['td'] = td if isinstance(td, int) else td.microseconds
+        self._logfile.write('{}\n'.format(kwargs))
+        # TODO: don't flush on write
+        self._logfile.flush()
 
     def new_motor(self, port) -> LogInput:
         return LogMotor(self, port)

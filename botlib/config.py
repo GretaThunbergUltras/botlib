@@ -5,8 +5,11 @@ class ConfigSet(object):
     """
     A collection of configuration objects. Access via `bot.config()`.
     """
+    
+    DATA_DIR = '/usr/local/share/bot'
+    CONFIG_DIR = os.path.join('/usr/local/share/bot', 'conf/')
+    LOG_DIR = os.path.join('/usr/local/share/bot', 'log/')
 
-    CONFIG_DIR = '/home/pi/botconf'
     MOTOR_CONFIG = 'motors.json'
     STEER_PID_CONFIG = 'steer_pid.json'
 
@@ -38,7 +41,7 @@ class Config(object):
     """
     def __init__(self, fname):
         if not os.path.exists(ConfigSet.CONFIG_DIR):
-            os.mkdir(ConfigSet.CONFIG_DIR)
+            os.makedirs(ConfigSet.CONFIG_DIR)
 
         self._fname = fname
         self._path = ConfigSet._get_file_path(self._fname)
