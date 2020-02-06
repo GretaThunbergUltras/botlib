@@ -25,6 +25,9 @@ class LogMotor(LogInput):
     def change_position(self, nv):
         self._update(ty='change_position', port=self._port, value=nv)
 
+    def change_position_factor(self, nv):
+        self._update(ty='change_position_factor', port=self._port, value=nv)
+
 class Log(object):
     def __init__(self):
         pass

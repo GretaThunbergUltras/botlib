@@ -126,8 +126,7 @@ class Bot(object):
 
         :param pnew: a value between -1.0 and 1.0.
         """
-        pos = self._steer_motor.position_from_factor(pnew)
-        self._steer_motor.change_position(pos)
+        self._steer_motor.change_position_factor(pnew)
 
     def calibrate(self):
         """

@@ -159,7 +159,17 @@ class CalibratedMotor(Motor):
 
         self.to_init_position()
 
-    def change_position(self, pnew):
+    def change_position_factor(self, pnew):
+        """
+        Set the new position of the motor by a float in range -1 <= ... <= 1.
+        
+        :param pnew: If minimum and maximum are known, this value must be between both.
+        """
+        self._log.change_position_factor(pnew)
+        pnew = self.position_from_factor(pnew)
+        self.change_position(pnew, _log=False)
+
+    def change_position(self, pnew, _log=True):
         """
         Set the new position of the motor.
         
@@ -167,9 +177,11 @@ class CalibratedMotor(Motor):
         """
         if (self._pmin and self._pmax) and not (self._pmin <= pnew <= self._pmax):
             raise Exception('position ({} < {} < {}) is invalid for motor {}'.format(self._pmin, pnew, self._pmax, self._port))
+
         self._bp.set_motor_position(self._port, pnew)
 
-        self._log.change_position(pnew)
+        if _log:
+            self._log.change_position(pnew)
 
     def to_init_position(self):
         """
