@@ -40,12 +40,18 @@ class Log(object):
         # TODO: close file gracefully
         self._logfile = open(self._logfname, 'w')
 
+    def __del__(self):
+        self._logfile.close()
+
     def update(self, td, **kwargs):
-        # print('[LOG]', td, kwargs)
-        kwargs['td'] = td if isinstance(td, int) else td.microseconds
-        self._logfile.write('{}\n'.format(kwargs))
-        # TODO: don't flush on write
-        self._logfile.flush()
+        try:
+            # print('[LOG]', td, kwargs)
+            kwargs['td'] = td if isinstance(td, int) else td.microseconds
+            self._logfile.write('{}\n'.format(kwargs))
+            # TODO: don't flush on write
+            self._logfile.flush()
+        except ValueError:
+            print('update on already-closed log file')
 
     def new_motor(self, port) -> LogInput:
         return LogMotor(self, port)
