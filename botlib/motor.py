@@ -112,7 +112,7 @@ class CalibratedMotor(Motor):
         import time
 
         if self._bot != None:
-            cachepos = self._bot.config().motor_config(self._port)
+            cachepos = self._bot.config().motor()[self._port]
             print('config for', self._port, cachepos)
             if cachepos != None:
                 self._pmin = cachepos['min']
@@ -153,7 +153,7 @@ class CalibratedMotor(Motor):
                 'max': self._pmax,
                 'mid': self._pinit,
             }
-            self._bot.config().set_motor_config(self._port, config)
+            self._bot.config().motor()[self._port] = config
 
         self.to_init_position()
 

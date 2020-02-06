@@ -1,5 +1,6 @@
-import ctypes
 from typing import List, Any, Union
+
+import ctypes
 
 class Sonar(object):
     LEFT = 0

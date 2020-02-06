@@ -1,14 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head><title>Python: module botlib.objectdetect</title>
+<html><head><title>Python: module botlib.autopilot</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
 <tr bgcolor="#7799ee">
 <td valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="botlib.html"><font color="#ffffff">botlib</font></a>.objectdetect</strong></big></big></font></td
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="botlib.html"><font color="#ffffff">botlib</font></a>.autopilot</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/witling/dev/botlib/botlib/objectdetect.py">/home/witling/dev/botlib/botlib/objectdetect.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/witling/dev/botlib/botlib/autopilot.py">/home/witling/dev/botlib/botlib/autopilot.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -18,7 +18,9 @@
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="cv2.cv2.html">cv2.cv2</a><br>
-</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td><td width="25%" valign=top><a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ee77aa">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -29,7 +31,7 @@
 <dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="botlib.objectdetect.html#ObjectDetector">ObjectDetector</a>
+<dt><font face="helvetica, arial"><a href="botlib.autopilot.html#Autopilot">Autopilot</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -37,15 +39,17 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="ObjectDetector">class <strong>ObjectDetector</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="Autopilot">class <strong>Autopilot</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
     
-<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>A&nbsp;class&nbsp;that&nbsp;delivers&nbsp;values&nbsp;correcting&nbsp;the&nbsp;bots&nbsp;steer&nbsp;direction.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="ObjectDetector-__init__"><strong>__init__</strong></a>(self, bot)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+<dl><dt><a name="Autopilot-__init__"><strong>__init__</strong></a>(self, bot)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
 
-<dl><dt><a name="ObjectDetector-detect"><strong>detect</strong></a>(self, cascade:str)</dt><dd><tt>Try&nbsp;to&nbsp;detect&nbsp;objects&nbsp;in&nbsp;the&nbsp;current&nbsp;`Camera`&nbsp;frame.<br>
+<dl><dt><a name="Autopilot-active"><strong>active</strong></a>(self, active:bool)</dt><dd><tt>Spawns&nbsp;a&nbsp;new&nbsp;thread&nbsp;and&nbsp;adjusts&nbsp;the&nbsp;steer&nbsp;position&nbsp;automatically.<br>
 &nbsp;<br>
-:param&nbsp;cascade:&nbsp;name&nbsp;of&nbsp;the&nbsp;model&nbsp;to&nbsp;use&nbsp;for&nbsp;detection.</tt></dd></dl>
+:param&nbsp;active:&nbsp;a&nbsp;bool&nbsp;that&nbsp;enables/disables&nbsp;automatic&nbsp;steering.</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>

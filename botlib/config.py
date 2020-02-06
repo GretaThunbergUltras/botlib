@@ -1,45 +1,98 @@
 import json
 import os
 
-class Config(object):
+class ConfigSet(object):
+    """
+    A collection of configuration objects. Access via `bot.config()`.
+    """
+
     CONFIG_DIR = '/home/pi/botconf'
     MOTOR_CONFIG = 'motors.json'
     STEER_PID_CONFIG = 'steer_pid.json'
 
-    def __init__(self, path=None):
-        if not os.path.exists(Config.CONFIG_DIR):
-            os.mkdir(Config.CONFIG_DIR)
-        
-        self._motor_config = self._load_config(Config.MOTOR_CONFIG)
+    _motor = None
+    _steer_pid = None
 
-    def _get_file_path(self, fp: str):
-        return os.path.join(Config.CONFIG_DIR, fp)
+    def motor():
+        """
+        :returns: an instance of `MotorConfig`
+        """
+        if ConfigSet._motor is None:
+            ConfigSet._motor = MotorConfig()
+        return ConfigSet._motor
 
-    def _save_config(self, path, config):
-        path = self._get_file_path(path)
-        with open(path, 'w') as f:
-            f.write(json.dumps(config))
+    def steer_pid():
+        """
+        :returns: an instance of `SteerPIDConfig`
+        """
+        if ConfigSet._steer_pid is None:
+            ConfigSet._steer_pid = SteerPIDConfig()
+        return ConfigSet._steer_pid
 
-    def _load_config(self, path):
-        path = self._get_file_path(path)
+    def _get_file_path(fp: str):
+        return os.path.join(ConfigSet.CONFIG_DIR, fp)
 
-        if not os.path.exists(path):
-            print('config not found, creating')
-            self._save_config(path, {})
+class Config(object):
+    """
+    Loads a configuration file `fname`. The file name must be relative to the default configuration directoy `ConfigSet.CONFIG_DIR` and must contain valid json.
+    """
+    def __init__(self, fname):
+        if not os.path.exists(ConfigSet.CONFIG_DIR):
+            os.mkdir(ConfigSet.CONFIG_DIR)
 
-        with open(path, 'r') as f:
+        self._fname = fname
+        self._path = ConfigSet._get_file_path(self._fname)
+        self._data = self._load()
+
+    def __getitem__(self, name):
+        name = str(name)
+        if name not in self._data:
+            return None
+        return self._data[name]
+
+    def __setitem__(self, name, value):
+        name = str(name)
+        self._data[name] = value
+        self._save()
+
+    def _bootstrap(self):
+        """
+        Called when the configuration file is initialized inside the filesystem.
+
+        :returns: either `dict` with the default key-value-pairs or `None`
+        """
+        return None
+
+    def _save(self):
+        with open(self._path, 'w') as f:
+            f.write(json.dumps(self._data))
+
+    def _load(self):
+        if not os.path.exists(self._path):
+            print('config {} not found, creating'.format(self._path))
+            boot = self._bootstrap()
+            self._data = {} if boot is None else boot
+            self._save()
+
+        with open(self._path, 'r') as f:
             raw = f.read()
             return json.loads(raw)
         
         return {}
 
-    def motor_config(self, port):
-        port = str(port)
-        if port not in self._motor_config:
-            return None
-        return self._motor_config[port]
+class MotorConfig(Config):
+    """
+    Stores the minimum, maximum and default position for calibrated motors. Access via `bot.config().motor()`.
+    """
+    def __init__(self):
+        super().__init__(ConfigSet.MOTOR_CONFIG)
 
-    def set_motor_config(self, port, config):
-        port = str(port)
-        self._motor_config[port] = config
-        self._save_config(Config.MOTOR_CONFIG, self._motor_config)
+class SteerPIDConfig(Config):
+    """
+    Stores the PID controller values for steering. Access via `bot.config().steer_pid()`.
+    """
+    def __init__(self):
+        super().__init__(ConfigSet.STEER_PID_CONFIG)
+
+    def _bootstrap(self):
+        return { 'cp': 85, 'p': 1.8, 'i': 0.002, 'd': 0.6 }

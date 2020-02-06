@@ -1,4 +1,4 @@
-from .config import Config
+from .config import ConfigSet
 from .forklift import Forklift
 from .motor import CalibratedMotor, Motor
 from .utils import Task
@@ -13,7 +13,7 @@ class Bot(object):
         with open('/etc/hostname', 'r') as hostname:
             self._name = hostname.read().strip()
 
-        self._config = Config()
+        self._config = ConfigSet
 
         self._drive_motor = Motor(Motor._bp.PORT_B)
         self._steer_motor = CalibratedMotor(Motor._bp.PORT_D, calpow=30, bot=self)

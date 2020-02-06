@@ -1,10 +1,10 @@
+from .utils import PIDController
+
+from threading import Thread
+
 import numpy as np
 import math
 import cv2
-
-from .config import Config
-from .utils import PIDController
-from threading import Thread
 
 #import time
 #traces = {}
@@ -18,14 +18,15 @@ from threading import Thread
 #        traces[idx] = now
 
 class Autopilot(object):
+    """
+    A class that delivers values correcting the bots steer direction.
+    """
     def __init__(self, bot):
-        """
-        A class that delivers values correcting the bots steer direction.
-        """
         self._bot = bot
 
-        # self._pid_config = Config(Config.STEER_PID_CONFIG)
-        self._pid = PIDController(cp=85, p=1.8, i=0.002, d=0.6)
+        conf = self._bot.config().steer_pid()
+        cp, p, i, d = conf['cp'], conf['p'], conf['i'], conf['d']
+        self._pid = PIDController(cp, p, i, d)
 
         from .linetracking import LRTracker
         self._tracker = LRTracker(self._bot.camera())

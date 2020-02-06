@@ -1,8 +1,12 @@
-import cv2
-
 from vidgear.gears import PiGear
 
+import cv2
+
 class Camera(object):
+    """
+    Wrapper around the connected camera.
+    """
+
     def __init__(self, bot):
         self._bot = bot
 
@@ -16,6 +20,11 @@ class Camera(object):
         self.stop()
 
     def resolution(self):
+        """
+        Read the recordings frame resolution.
+
+        :returns: a tuple in the form (width, height)
+        """
         return self._resolution
 
     def start(self):

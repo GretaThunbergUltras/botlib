@@ -1,4 +1,4 @@
-import cv2 as cv
+import cv2
 
 class ObjectDetector(object):
     def __init__(self, bot):
@@ -6,7 +6,7 @@ class ObjectDetector(object):
         self._classifier = {}
 
     def _load_classifier(self, cascade: str):
-        self._classifier[cascade] = cv.CascadeClassifier(cascade)
+        self._classifier[cascade] = cv2.CascadeClassifier(cascade)
 
     def detect(self, cascade: str):
         """
@@ -18,9 +18,9 @@ class ObjectDetector(object):
             self._load_classifier(cascade)
         classifier = self._classifier[cascade]
 
-        ret, frame = self._bot.camera().get_capture().read()
-        if ret:
-            gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+        frame = self._bot.camera().read()
+        if frame is not None:
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             objects = classifier.detectMultiScale(gray, 1.1, 3)
             return objects
         else:

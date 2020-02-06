@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module botlib.config</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="botlib.html"><font color="#ffffff">botlib</font></a>.config</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/witling/dev/botlib/botlib/config.py">/home/witling/dev/botlib/botlib/config.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="json.html">json</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="botlib.config.html#Config">Config</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="botlib.config.html#MotorConfig">MotorConfig</a>
+</font></dt><dt><font face="helvetica, arial"><a href="botlib.config.html#SteerPIDConfig">SteerPIDConfig</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="botlib.config.html#ConfigSet">ConfigSet</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Config">class <strong>Config</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Loads&nbsp;a&nbsp;configuration&nbsp;file&nbsp;`fname`.&nbsp;The&nbsp;file&nbsp;name&nbsp;must&nbsp;be&nbsp;relative&nbsp;to&nbsp;the&nbsp;default&nbsp;configuration&nbsp;directoy&nbsp;`<a href="#ConfigSet">ConfigSet</a>.CONFIG_DIR`&nbsp;and&nbsp;must&nbsp;contain&nbsp;valid&nbsp;json.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Config-__getitem__"><strong>__getitem__</strong></a>(self, name)</dt></dl>
+
+<dl><dt><a name="Config-__init__"><strong>__init__</strong></a>(self, fname)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Config-__setitem__"><strong>__setitem__</strong></a>(self, name, value)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="ConfigSet">class <strong>ConfigSet</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>A&nbsp;collection&nbsp;of&nbsp;configuration&nbsp;objects.&nbsp;Access&nbsp;via&nbsp;`bot.config()`.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="ConfigSet-motor"><strong>motor</strong></a>()</dt><dd><tt>:returns:&nbsp;an&nbsp;instance&nbsp;of&nbsp;`<a href="#MotorConfig">MotorConfig</a>`</tt></dd></dl>
+
+<dl><dt><a name="ConfigSet-steer_pid"><strong>steer_pid</strong></a>()</dt><dd><tt>:returns:&nbsp;an&nbsp;instance&nbsp;of&nbsp;`<a href="#SteerPIDConfig">SteerPIDConfig</a>`</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>CONFIG_DIR</strong> = '/home/pi/botconf'</dl>
+
+<dl><dt><strong>MOTOR_CONFIG</strong> = 'motors.json'</dl>
+
+<dl><dt><strong>STEER_PID_CONFIG</strong> = 'steer_pid.json'</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="MotorConfig">class <strong>MotorConfig</strong></a>(<a href="botlib.config.html#Config">Config</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Stores&nbsp;the&nbsp;minimum,&nbsp;maximum&nbsp;and&nbsp;default&nbsp;position&nbsp;for&nbsp;calibrated&nbsp;motors.&nbsp;Access&nbsp;via&nbsp;`bot.config().motor()`.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="botlib.config.html#MotorConfig">MotorConfig</a></dd>
+<dd><a href="botlib.config.html#Config">Config</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="MotorConfig-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="botlib.config.html#Config">Config</a>:<br>
+<dl><dt><a name="MotorConfig-__getitem__"><strong>__getitem__</strong></a>(self, name)</dt></dl>
+
+<dl><dt><a name="MotorConfig-__setitem__"><strong>__setitem__</strong></a>(self, name, value)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="botlib.config.html#Config">Config</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SteerPIDConfig">class <strong>SteerPIDConfig</strong></a>(<a href="botlib.config.html#Config">Config</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Stores&nbsp;the&nbsp;PID&nbsp;controller&nbsp;values&nbsp;for&nbsp;steering.&nbsp;Access&nbsp;via&nbsp;`bot.config().steer_pid()`.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="botlib.config.html#SteerPIDConfig">SteerPIDConfig</a></dd>
+<dd><a href="botlib.config.html#Config">Config</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="SteerPIDConfig-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="botlib.config.html#Config">Config</a>:<br>
+<dl><dt><a name="SteerPIDConfig-__getitem__"><strong>__getitem__</strong></a>(self, name)</dt></dl>
+
+<dl><dt><a name="SteerPIDConfig-__setitem__"><strong>__setitem__</strong></a>(self, name, value)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="botlib.config.html#Config">Config</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>
