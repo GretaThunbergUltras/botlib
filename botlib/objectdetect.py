@@ -19,9 +19,10 @@ class ObjectDetector(object):
         classifier = self._classifier[cascade]
 
         frame = self._bot.camera().read()
-        if frame is not None:
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            objects = classifier.detectMultiScale(gray, 1.1, 3)
-            return objects
-        else:
+        if frame is None:
             print('frame is invalid')
+            return None
+
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        objects = classifier.detectMultiScale(gray, 1.1, 3)
+        return objects
