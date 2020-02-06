@@ -95,8 +95,8 @@ def handle_event(action):
     elif cmd == Action.SPEED:
         pass
     elif cmd == Action.FOLLOW_LINE:
-        bot.linetracker().autopilot(not bot.linetracker()._track_active)
-        print('line tracking active?', bot.linetracker()._track_active)
+        bot.autopilot().active(not bot.autopilot().is_active())
+        print('line tracking active?', bot.autopilot().is_active())
 
 def main():
     import sys
@@ -110,7 +110,7 @@ def main():
     print('calibrating...')
     bot.calibrate()
 
-    bot.linetracker().autopilot(False)
+    bot.autopilot().active(False)
 
     if '--server' in sys.argv:
         create_server()

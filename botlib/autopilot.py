@@ -58,6 +58,12 @@ class Autopilot(object):
         self._track_process = Thread(group=None, target=follow, daemon=True)
         self._track_process.start()
 
+    def is_active(self):
+        """
+        :returns: a bool indicating the active state.
+        """
+        return self._track_active
+
     def active(self, active: bool):
         """
         Spawns a new thread and adjusts the steer position automatically.
