@@ -26,6 +26,7 @@ class Bot(object):
         self._broker = None
         self._camera = None
         self._forklift = None
+        self._led = None
         self._objectdetector = None
         self._sonar = None
 
@@ -83,6 +84,15 @@ class Bot(object):
         if self._forklift == None:
             self._forklift = Forklift(self)
         return self._forklift
+
+    def led(self):
+        """
+        :return: instance to access the brickpi status led.
+        """
+        if self._led is None:
+            from .led import LED
+            self._led = LED(self)
+        return self._led
 
     def log(self):
         """
