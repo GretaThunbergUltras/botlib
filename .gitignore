@@ -2,3 +2,6 @@
 botlib/**/*.html
 *.pyc
 /*.html
+**/*.egg-info/*
+**/dist/*
+**/build/*
