@@ -40,7 +40,7 @@ class Camera:
             self._initialize()
         self._cam.start_recording(self._buffer, format='h264')
 
-    def get_capture(self):
+    def capture(self):
         """
         Read the last frame from the buffer.
 
