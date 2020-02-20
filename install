@@ -1,11 +1,21 @@
 #!/bin/bash
 
-deps="python3-pil.imagetk libqt4-dev libjasper-dev"
-py_deps="opencv-python readchar paho-mqtt inputs"
+deps="libqt4-dev libjasper-dev"
+py_deps="vidgear opencv-python paho-mqtt readchar inputs"
 
 function is_installed() {
     dpkg -l | grep "$1"
     return $?
+}
+
+function install_ultrasonic() {
+    pushd /tmp
+    echo "INSTALLING ultrasonic"
+    git clone https://github.com/GretaThunbergUltras/ultrasonic
+    cd ultrasonic
+    sudo chmod +x ./install
+    sudo ./install
+    popd
 }
 
 for dep in $deps; do
@@ -20,13 +30,7 @@ for py_dep in $py_deps; do
     sudo pip3 install $py_dep &>/dev/null
 done
 
-pushd /tmp
-echo "INSTALLING ultrasonic"
-git clone https://github.com/GretaThunbergUltras/ultrasonic
-cd ultrasonic
-sudo chmod +x ./install
-sudo ./install
-popd
+install_ultrasonic
 
 # install this library
 echo "INSTALLING botlib"
